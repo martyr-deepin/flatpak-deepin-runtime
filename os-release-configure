@@ -1,0 +1,17 @@
+#!/bin/sh
+
+cat <<EOF > Makefile
+all:
+
+install:
+	mkdir -p ${DESTDIR}/usr/lib
+	install os-release ${DESTDIR}/usr/lib
+	mkdir -p ${DESTDIR}/usr/share/appdata
+	mkdir -p ${DESTDIR}/etc
+	install issue ${DESTDIR}/etc
+	install issue.net ${DESTDIR}/etc
+	install com.deepin.Platform.appdata.xml ${DESTDIR}/usr/share/appdata
+	install com.deepin.Sdk.appdata.xml ${DESTDIR}/usr/share/appdata
+	appstream-compose --basename=com.deepin.Platform --prefix=/usr --origin=flatpak com.deepin.Platform
+	appstream-compose --basename=com.deepin.Sdk --prefix=/usr --origin=flatpak com.deepin.Sdk
+EOF

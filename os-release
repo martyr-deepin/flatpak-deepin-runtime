@@ -1,0 +1,4 @@
+NAME=KDE
+VERSION=master (Flatpak runtime)
+VERSION_ID=master
+ID=org.kde.Platform

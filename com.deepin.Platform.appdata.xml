@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="runtime">
+  <id>com.deepin.Platform</id>
+  <metadata_license>CC0</metadata_license>
+  <!-- FIXME -->
+  <project_license>GPL-3.0+</project_license>
+  <name>Deepin Application Platform version master</name>
+  <summary>Shared libraries used by Deepin applications</summary>
+  <url type="homepage">http://www.deepin.com/</url>
+</component>

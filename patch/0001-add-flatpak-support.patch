@@ -1,0 +1,80 @@
+From 0a9c777ae396e73df593b6402b4112de96a6cead Mon Sep 17 00:00:00 2001
+From: Iceyer <me@iceyer.net>
+Date: Tue, 8 Aug 2017 15:22:23 +0800
+Subject: [PATCH] add flatpak support
+
+---
+ dbusaddons/fcitxqtconnection.cpp | 35 +++++++++++++++++++++++++----------
+ 1 file changed, 25 insertions(+), 10 deletions(-)
+
+diff --git a/dbusaddons/fcitxqtconnection.cpp b/dbusaddons/fcitxqtconnection.cpp
+index 3264600..7c872a7 100644
+--- a/dbusaddons/fcitxqtconnection.cpp
++++ b/dbusaddons/fcitxqtconnection.cpp
+@@ -194,7 +194,9 @@ int FcitxQtConnectionPrivate::displayNumber() {
+             ++pos;
+             int pos2 = display.indexOf('.', pos);
+             if (pos2 > 0) {
+-                displayNumber = display.mid(pos, pos2 - pos);
++                // Flatpak: use host display number
++                ++pos2;
++                displayNumber = display.mid(pos2);
+             } else {
+                 displayNumber = display.mid(pos);
+             }
+@@ -217,14 +219,21 @@ const QString& FcitxQtConnectionPrivate::socketFile()
+     if (!m_socketFile.isEmpty())
+         return m_socketFile;
+ 
+-    QString filename = QString("%1-%2").arg(QString::fromLatin1(QDBusConnection::localMachineId())).arg(displayNumber());
+-
+-    QString home = QString::fromLocal8Bit(qgetenv("XDG_CONFIG_HOME"));
+-    if (home.isEmpty()) {
+-        home = QDir::homePath().append(QLatin1Literal("/.config"));
++    // Flatpak: use host dbus file for fcitx
++    QString configDir = qgetenv("FCITX_USER_CONFIG_DIR");
++    if (!configDir.isEmpty()) {
++        QString home = qgetenv("HOME");
++        QString machineID = QString::fromLatin1(QDBusConnection::localMachineId());
++        QString filename = QString("%1-%2").arg(machineID).arg(displayNumber());
++        m_socketFile = QString("%1/%2/dbus/%3").arg(home).arg(configDir).arg(filename);
++    } else {
++        QString filename = QString("%1-%2").arg(QString::fromLatin1(QDBusConnection::localMachineId())).arg(displayNumber());
++        QString home = QString::fromLocal8Bit(qgetenv("XDG_CONFIG_HOME"));
++        if (home.isEmpty()) {
++            home = QDir::homePath().append(QLatin1Literal("/.config"));
++        }
++        m_socketFile = QString("%1/fcitx/dbus/%2").arg(home).arg(filename);
+     }
+-    m_socketFile = QString("%1/fcitx/dbus/%2").arg(home).arg(filename);
+-
+     return m_socketFile;
+ }
+ 
+@@ -253,6 +262,14 @@ QString FcitxQtConnectionPrivate::address()
+     if (sz != addrlen + 2 * sizeof(pid_t) + 1)
+         return QString();
+ 
++    addr = QLatin1String(buffer);
++
++    // Flatpak: skip pid check, may add a config option is better
++    QString configDir = qgetenv("FCITX_USER_CONFIG_DIR");
++    if (!configDir.isEmpty()) {
++        return addr;
++    }
++
+     /* skip '\0' */
+     p++;
+     pid_t *ppid = (pid_t*) p;
+@@ -263,8 +280,6 @@ QString FcitxQtConnectionPrivate::address()
+         || !_pid_exists(fcitxpid))
+         return QString();
+ 
+-    addr = QLatin1String(buffer);
+-
+     return addr;
+ }
+ 
+-- 
+2.11.0
+
