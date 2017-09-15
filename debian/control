@@ -1,4 +1,4 @@
-Source: deepin-fprt-com.deepin.platform-15.5
+Source: deepin-fprt-com.deepin.runtime-15.5
 Section: utils
 Priority: optional
 Maintainer: Deepin Packages Builder <packages@deepin.com>
