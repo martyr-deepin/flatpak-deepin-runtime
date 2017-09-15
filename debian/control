@@ -1,0 +1,12 @@
+Source: deepin-fprt-com.deepin.platform-15.5
+Section: utils
+Priority: optional
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Build-Depends: debhelper (>= 9)
+Standards-Version: 3.9.8
+Homepage: http://www.deepin.com/
+
+Package: deepin-fprt-com.deepin.platform-15.5
+Architecture: amd64
+Depends: ${misc:Depends}, flatpak
+Description: deepin flatpak runtime

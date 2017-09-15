@@ -1,0 +1,4 @@
+#!/bin/sh
+flatpak install --system --bundle /usr/share/deepin-flatpak/runtime/com.deepin.Platform/x86_64/15.5/bundle
+rm /usr/share/deepin-flatpak/runtime/com.deepin.Platform/x86_64/15.5/bundle
+exit 0
