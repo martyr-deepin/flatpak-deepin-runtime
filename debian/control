@@ -10,3 +10,8 @@ Package: deepin-fprt-com.deepin.platform-15.5
 Architecture: amd64
 Depends: ${misc:Depends}, flatpak
 Description: deepin flatpak runtime
+
+Package: deepin-fprt-com.deepin.sdk-15.5
+Architecture: amd64
+Depends: ${misc:Depends}, flatpak
+Description: deepin flatpak runtime

@@ -1,0 +1,5 @@
+#!/bin/sh
+if flatpak info --system com.deepin.Sdk/x86_64/15.5 >/dev/null 2>&1; then
+	flatpak uninstall --system com.deepin.Sdk/x86_64/15.5
+fi
+exit 0
