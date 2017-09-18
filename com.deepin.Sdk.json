@@ -470,7 +470,7 @@
                 {
                     "type": "git",
                     "url": "https://github.com/linuxdeepin/dtkcore.git",
-                    "branch": "2.0.0"
+                    "branch": "a2624cebd5bfbedd94e9ec93c0b774e371c68808"
                 },
                 {
                     "type": "script",
@@ -491,7 +491,7 @@
                 {
                     "type": "git",
                     "url": "https://github.com/linuxdeepin/dtkwidget.git",
-                    "branch": "2.0.0"
+                    "branch": "9f750d742eef0745eef729669ed4b5b4759317eb"
                 },
                 {
                     "type": "script",
@@ -512,7 +512,7 @@
                 {
                     "type": "git",
                     "url": "https://cr.deepin.io/qt5integration",
-                    "branch": "master"
+                    "branch": "e9980bf9199d3a8493d9ee924c2e9e2e81c70ebf"
                 },
                 {
                     "type": "script",
