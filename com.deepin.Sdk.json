@@ -503,6 +503,27 @@
             ]
         },
         {
+            "name": "dtkwm",
+            "cleanup-platform": [
+                "/bin",
+                "/mkspecs"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/linuxdeepin/dtwm.git",
+                    "branch": "e37b4c6e4716298b17bc1f3ddeba27ecc06ea2eb"
+                },
+                {
+                    "type": "script",
+                    "commands": [
+                        "qmake"
+                    ],
+                    "dest-filename": "configure"
+                }
+            ]
+        },
+        {
             "name": "dde-qt5integration",
             "cleanup-platform": [
                 "/bin",
