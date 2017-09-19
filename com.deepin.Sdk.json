@@ -18,8 +18,8 @@
         "org.freedesktop.Platform.Timezones",
         "org.freedesktop.Platform.GStreamer",
         "org.freedesktop.Platform.Icontheme",
-        "org.freedesktop.Sdk.Extension",
-        "org.freedesktop.Platform.VAAPI.Intel"
+        "org.freedesktop.Platform.VAAPI.Intel",
+        "org.freedesktop.Sdk.Extension"
     ],
     "finish-args": [
         "--env=GI_TYPELIB_PATH=/app/lib/girepository-1.0",
@@ -210,26 +210,6 @@
                         "qmake"
                     ],
                     "dest-filename": "configure"
-                }
-            ]
-        },
-        {
-            "name": "alsa-lib",
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "git://git.alsa-project.org/alsa-lib.git",
-                    "branch": "v1.1.2"
-                },
-                {
-                    "type": "shell",
-                    "commands": [
-                        "libtoolize --force --copy --automake",
-                        "aclocal",
-                        "autoheader",
-                        "automake --foreign --copy --add-missing",
-                        "autoconf"
-                    ]
                 }
             ]
         },
@@ -491,7 +471,11 @@
                 {
                     "type": "git",
                     "url": "https://github.com/linuxdeepin/dtkwidget.git",
-                    "branch": "9f750d742eef0745eef729669ed4b5b4759317eb"
+                    "branch": "1a41b7b79bf6fb05b75fd5a40be3fbdd6aa89964"
+                },
+                {
+                    "type": "patch",
+                    "path": "patch/0001-Use-dbus-singleton.patch"
                 },
                 {
                     "type": "script",
