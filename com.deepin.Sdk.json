@@ -511,7 +511,7 @@
             "sources": [
                 {
                     "type": "git",
-                    "url": "https://github.com/linuxdeepin/dtwm.git",
+                    "url": "https://github.com/linuxdeepin/dtkwm.git",
                     "branch": "e37b4c6e4716298b17bc1f3ddeba27ecc06ea2eb"
                 },
                 {
