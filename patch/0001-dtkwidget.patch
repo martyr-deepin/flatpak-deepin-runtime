@@ -1,0 +1,25 @@
+From 9b577be33132722bf3677842059ccd60353bd466 Mon Sep 17 00:00:00 2001
+From: iceyer <me@iceyer.net>
+Date: Tue, 26 Sep 2017 14:13:47 +0800
+Subject: [PATCH] fix: crash if setIcon with svg
+
+Change-Id: I78fb93d8e24586d048111e3ced827bcb17c0a21a
+---
+ src/widgets/ddialog.cpp | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/src/widgets/ddialog.cpp b/src/widgets/ddialog.cpp
+index 6700faf..fa08460 100644
+--- a/src/widgets/ddialog.cpp
++++ b/src/widgets/ddialog.cpp
+@@ -662,7 +662,6 @@ void DDialog::setIcon(const QIcon &icon)
+ 
+     if(!icon.isNull()) {
+         const QList<QSize> &sizes = icon.availableSizes();
+-        setIconPixmap(icon.pixmap(sizes.first()));
+         if(!sizes.isEmpty())
+             setIconPixmap(icon.pixmap(sizes.first()));
+         else
+-- 
+2.11.0
+

@@ -441,94 +441,6 @@
             ]
         },
         {
-            "name": "dtkcore",
-            "cleanup-platform": [
-                "/bin",
-                "/mkspecs"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://github.com/linuxdeepin/dtkcore.git",
-                    "branch": "a2624cebd5bfbedd94e9ec93c0b774e371c68808"
-                },
-                {
-                    "type": "script",
-                    "commands": [
-                        "qmake"
-                    ],
-                    "dest-filename": "configure"
-                }
-            ]
-        },
-        {
-            "name": "dtkwidget",
-            "cleanup-platform": [
-                "/bin",
-                "/mkspecs"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://github.com/linuxdeepin/dtkwidget.git",
-                    "branch": "1a41b7b79bf6fb05b75fd5a40be3fbdd6aa89964"
-                },
-                {
-                    "type": "patch",
-                    "path": "patch/0001-Use-dbus-singleton.patch"
-                },
-                {
-                    "type": "script",
-                    "commands": [
-                        "qmake"
-                    ],
-                    "dest-filename": "configure"
-                }
-            ]
-        },
-        {
-            "name": "dtkwm",
-            "cleanup-platform": [
-                "/bin",
-                "/mkspecs"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://github.com/linuxdeepin/dtkwm.git",
-                    "branch": "e37b4c6e4716298b17bc1f3ddeba27ecc06ea2eb"
-                },
-                {
-                    "type": "script",
-                    "commands": [
-                        "qmake"
-                    ],
-                    "dest-filename": "configure"
-                }
-            ]
-        },
-        {
-            "name": "dde-qt5integration",
-            "cleanup-platform": [
-                "/bin",
-                "/mkspecs"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://cr.deepin.io/qt5integration",
-                    "branch": "e9980bf9199d3a8493d9ee924c2e9e2e81c70ebf"
-                },
-                {
-                    "type": "script",
-                    "commands": [
-                        "qmake"
-                    ],
-                    "dest-filename": "configure"
-                }
-            ]
-        },
-        {
             "name": "deepin-icon-theme",
             "sources": [
                 {
@@ -604,6 +516,95 @@
                 {
                     "type": "patch",
                     "path": "patch/0001-add-flatpak-support.patch"
+                }
+            ]
+        },
+
+        {
+            "name": "dtkcore",
+            "cleanup-platform": [
+                "/bin",
+                "/mkspecs"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/linuxdeepin/dtkcore.git",
+                    "branch": "a2624cebd5bfbedd94e9ec93c0b774e371c68808"
+                },
+                {
+                    "type": "script",
+                    "commands": [
+                        "qmake"
+                    ],
+                    "dest-filename": "configure"
+                }
+            ]
+        },
+        {
+            "name": "dtkwidget",
+            "cleanup-platform": [
+                "/bin",
+                "/mkspecs"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/linuxdeepin/dtkwidget.git",
+                    "branch": "84f12429374394bfb34ceb0b7830905b81bdd930"
+                },
+                {
+                    "type": "patch",
+                    "path": "patch/0001-dtkwidget.patch"
+                },
+                {
+                    "type": "script",
+                    "commands": [
+                        "qmake"
+                    ],
+                    "dest-filename": "configure"
+                }
+            ]
+        },
+        {
+            "name": "dtkwm",
+            "cleanup-platform": [
+                "/bin",
+                "/mkspecs"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/linuxdeepin/dtkwm.git",
+                    "branch": "e37b4c6e4716298b17bc1f3ddeba27ecc06ea2eb"
+                },
+                {
+                    "type": "script",
+                    "commands": [
+                        "qmake"
+                    ],
+                    "dest-filename": "configure"
+                }
+            ]
+        },
+        {
+            "name": "dde-qt5integration",
+            "cleanup-platform": [
+                "/bin",
+                "/mkspecs"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://cr.deepin.io/qt5integration",
+                    "branch": "e9980bf9199d3a8493d9ee924c2e9e2e81c70ebf"
+                },
+                {
+                    "type": "script",
+                    "commands": [
+                        "qmake"
+                    ],
+                    "dest-filename": "configure"
                 }
             ]
         },
