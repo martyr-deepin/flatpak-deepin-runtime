@@ -2,7 +2,7 @@
     "build-runtime": true,
     "id": "com.deepin.Sdk",
     "id-platform": "com.deepin.Platform",
-    "branch": "15.5",
+    "branch": "15.5.1",
     "runtime": "org.freedesktop.Platform",
     "sdk": "org.freedesktop.Sdk",
     "runtime-version": "1.6",
