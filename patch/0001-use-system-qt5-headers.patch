@@ -1,0 +1,26 @@
+From 57c690b6ccdd4762786bec2a23ffde0b3bd9aa76 Mon Sep 17 00:00:00 2001
+From: flatpak-builder <flatpak-builder@localhost.pc>
+Date: Fri, 13 Oct 2017 08:48:30 +0800
+Subject: [PATCH] use system qt5 headers
+
+---
+ platformplugin/linux.pri | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
+
+diff --git a/platformplugin/linux.pri b/platformplugin/linux.pri
+index a6899a7..49d87c6 100644
+--- a/platformplugin/linux.pri
++++ b/platformplugin/linux.pri
+@@ -63,8 +63,4 @@ contains(QT_CONFIG, xcb-qt) {
+     DEFINES += XCB_USE_RENDER
+ }
+ 
+-exists($$PWD/libqt5xcbqpa-dev/$$VERSION) {
+-    INCLUDEPATH += $$PWD/libqt5xcbqpa-dev/$$VERSION
+-} else {
+-    error(Not support Qt Version: $$VERSION)
+-}
++INCLUDEPATH += /usr/include/qtxcb-private
+-- 
+2.14.2
+

@@ -81,6 +81,10 @@
                 "/bin",
                 "/mkspecs"
             ],
+            "post-install": [
+                "mkdir -p /usr/include/qtxcb-private",
+		"cp -r src/plugins/platforms/xcb/*.h /usr/include/qtxcb-private"
+            ],
             "config-opts": [
                 "-confirm-license",
                 "-opensource",
@@ -118,7 +122,7 @@
                 {
                     "type": "git",
                     "url": "git://code.qt.io/qt/qtbase.git",
-                    "branch": "v5.9.1"
+                    "branch": "v5.9.2"
                 },
                 {
                     "type": "shell",
@@ -146,7 +150,7 @@
                 {
                     "type": "git",
                     "url": "git://code.qt.io/qt/qtdeclarative.git",
-                    "branch": "v5.9.1"
+                    "branch": "v5.9.2"
                 },
                 {
                     "type": "script",
@@ -181,7 +185,7 @@
                 {
                     "type": "git",
                     "url": "git://code.qt.io/qt/qttools.git",
-                    "branch": "v5.9.1"
+                    "branch": "v5.9.2"
                 },
                 {
                     "type": "script",
@@ -202,7 +206,7 @@
                 {
                     "type": "git",
                     "url": "git://code.qt.io/qt/qtscript.git",
-                    "branch": "v5.9.1"
+                    "branch": "v5.9.2"
                 },
                 {
                     "type": "script",
@@ -249,7 +253,7 @@
                 {
                     "type": "git",
                     "url": "git://code.qt.io/qt/qtsvg.git",
-                    "branch": "v5.9.1"
+                    "branch": "v5.9.2"
                 },
                 {
                     "type": "script",
@@ -270,7 +274,7 @@
                 {
                     "type": "git",
                     "url": "git://code.qt.io/qt/qtx11extras.git",
-                    "branch": "v5.9.1"
+                    "branch": "v5.9.2"
                 },
                 {
                     "type": "script",
@@ -291,7 +295,7 @@
                 {
                     "type": "git",
                     "url": "git://code.qt.io/qt/qtmultimedia.git",
-                    "branch": "v5.9.1"
+                    "branch": "v5.9.2"
                 },
                 {
                     "type": "script",
@@ -312,7 +316,7 @@
                 {
                     "type": "git",
                     "url": "git://code.qt.io/qt/qtsensors.git",
-                    "branch": "v5.9.1"
+                    "branch": "v5.9.2"
                 },
                 {
                     "type": "script",
@@ -333,7 +337,7 @@
                 {
                     "type": "git",
                     "url": "git://code.qt.io/qt/qtgraphicaleffects.git",
-                    "branch": "v5.9.1"
+                    "branch": "v5.9.2"
                 },
                 {
                     "type": "script",
@@ -354,7 +358,7 @@
                 {
                     "type": "git",
                     "url": "git://code.qt.io/qt/qtimageformats.git",
-                    "branch": "v5.9.1"
+                    "branch": "v5.9.2"
                 },
                 {
                     "type": "script",
@@ -599,6 +603,10 @@
                     "url": "https://cr.deepin.io/qt5integration",
                     "branch": "e9980bf9199d3a8493d9ee924c2e9e2e81c70ebf"
                 },
+		{
+		   "type": "patch",
+                   "path": "patch/0001-use-system-qt5-headers.patch"
+		},
                 {
                     "type": "script",
                     "commands": [
