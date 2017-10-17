@@ -1,653 +1,648 @@
 {
-    "build-runtime": true,
-    "id": "com.deepin.Sdk",
-    "id-platform": "com.deepin.Platform",
-    "branch": "15.5.1",
-    "runtime": "org.freedesktop.Platform",
-    "sdk": "org.freedesktop.Sdk",
-    "runtime-version": "1.6",
-    "sdk-extensions": [
-        "org.freedesktop.Sdk.Debug",
-        "org.freedesktop.Sdk.Locale"
+  "build-runtime": true,
+  "id": "com.deepin.Sdk",
+  "id-platform": "com.deepin.Platform",
+  "branch": "15.5",
+  "runtime": "org.freedesktop.Platform",
+  "sdk": "org.freedesktop.Sdk",
+  "runtime-version": "1.6",
+  "sdk-extensions": [
+    "org.freedesktop.Sdk.Debug",
+    "org.freedesktop.Sdk.Locale"
+  ],
+  "platform-extensions": [
+    "org.freedesktop.Platform.Locale"
+  ],
+  "inherit-extensions": [
+    "org.freedesktop.Platform.GL",
+    "org.freedesktop.Platform.Timezones",
+    "org.freedesktop.Platform.GStreamer",
+    "org.freedesktop.Platform.Icontheme",
+    "org.freedesktop.Platform.VAAPI.Intel",
+    "org.freedesktop.Sdk.Extension"
+  ],
+  "finish-args": [
+    "--env=GI_TYPELIB_PATH=/app/lib/girepository-1.0",
+    "--env=GST_PLUGIN_SYSTEM_PATH=/app/lib/gstreamer-1.0:/usr/lib/extensions/gstreamer-1.0:/usr/lib/gstreamer-1.0",
+    "--env=XDG_DATA_DIRS=/app/share:/usr/share:/usr/share/runtime/share",
+    "--env=QT_PLUGIN_PATH=/app/lib64/plugins:/app/lib/plugins:/usr/share/runtime/lib/plugins",
+    "--env=QML2_IMPORT_PATH=/app/lib64/qml:/app/lib/qml",
+    "--env=DCONF_USER_CONFIG_DIR=.config/dconf",
+    "--filesystem=xdg-run/dconf",
+    "--filesystem=~/.config/dconf:ro",
+    "--env=XMODIFIERS=@im=fcitx",
+    "--env=QT_IM_MODULE=fcitx",
+    "--env=GTK_IM_MODULE=fcitx",
+    "--env=FCITX_USER_CONFIG_DIR=.config/fcitx",
+    "--filesystem=~/.config/fcitx:ro",
+    "--sdk=com.deepin.Sdk//master",
+    "--runtime=com.deepin.Platform//master"
+  ],
+  "cleanup": [
+    "/cache",
+    "/man",
+    "/share/man",
+    "/lib/systemd",
+    "*.la"
+  ],
+  "cleanup-commands": [
+    "touch -d @0 /usr/share/fonts",
+    "touch -d @0 /usr/share/fonts/*",
+    "fc-cache -fs"
+  ],
+  "cleanup-platform": [
+    "/include",
+    "/share/aclocal",
+    "/share/pkgconfig",
+    "/lib/pkgconfig",
+    "*.a"
+  ],
+  "cleanup-platform-commands": [
+    "touch -d @0 /usr/share/fonts",
+    "touch -d @0 /usr/share/fonts/*",
+    "fc-cache -fs",
+    "ldconfig -C /usr/etc/ld.so.cache"
+  ],
+  "build-options": {
+    "build-args": [
+      "--share=network"
     ],
-    "platform-extensions": [
-        "org.freedesktop.Platform.Locale"
-    ],
-    "inherit-extensions": [
-        "org.freedesktop.Platform.GL",
-        "org.freedesktop.Platform.Timezones",
-        "org.freedesktop.Platform.GStreamer",
-        "org.freedesktop.Platform.Icontheme",
-        "org.freedesktop.Platform.VAAPI.Intel",
-        "org.freedesktop.Sdk.Extension"
-    ],
-    "finish-args": [
-        "--env=GI_TYPELIB_PATH=/app/lib/girepository-1.0",
-        "--env=GST_PLUGIN_SYSTEM_PATH=/app/lib/gstreamer-1.0:/usr/lib/extensions/gstreamer-1.0:/usr/lib/gstreamer-1.0",
-        "--env=XDG_DATA_DIRS=/app/share:/usr/share:/usr/share/runtime/share",
-        "--env=QT_PLUGIN_PATH=/app/lib64/plugins:/app/lib/plugins:/usr/share/runtime/lib/plugins",
-        "--env=QML2_IMPORT_PATH=/app/lib64/qml:/app/lib/qml",
-        "--env=DCONF_USER_CONFIG_DIR=.config/dconf",
-        "--filesystem=xdg-run/dconf",
-        "--filesystem=~/.config/dconf:ro",
-        "--env=XMODIFIERS=@im=fcitx",
-        "--env=QT_IM_MODULE=fcitx",
-        "--env=GTK_IM_MODULE=fcitx",
-        "--env=FCITX_USER_CONFIG_DIR=.config/fcitx",
-        "--filesystem=~/.config/fcitx:ro",
-        "--sdk=com.deepin.Sdk//master",
-        "--runtime=com.deepin.Platform//master"
-    ],
-    "cleanup": [
-        "/cache",
-        "/man",
-        "/share/man",
-        "/lib/systemd",
-        "*.la"
-    ],
-    "cleanup-commands": [
-        "touch -d @0 /usr/share/fonts",
-        "touch -d @0 /usr/share/fonts/*",
-        "fc-cache -fs"
-    ],
-    "cleanup-platform": [
-        "/include",
-        "/share/aclocal",
-        "/share/pkgconfig",
-        "/lib/pkgconfig",
-        "*.a"
-    ],
-    "cleanup-platform-commands": [
-        "touch -d @0 /usr/share/fonts",
-        "touch -d @0 /usr/share/fonts/*",
-        "fc-cache -fs",
-        "ldconfig -C /usr/etc/ld.so.cache"
-    ],
-    "build-options": {
-        "build-args": [
-            "--share=network"
-        ],
-        "cflags": "-O2 -g -fstack-protector-strong -D_FORTIFY_SOURCE=2",
-        "cxxflags": "-O2 -g -fstack-protector-strong -D_FORTIFY_SOURCE=2",
-        "ldflags": "-fstack-protector-strong -Wl,-z,relro,-z,now",
-        "env": {
-            "V": "1"
+    "cflags": "-O2 -g -fstack-protector-strong -D_FORTIFY_SOURCE=2",
+    "cxxflags": "-O2 -g -fstack-protector-strong -D_FORTIFY_SOURCE=2",
+    "ldflags": "-fstack-protector-strong -Wl,-z,relro,-z,now",
+    "env": {
+      "V": "1"
+    }
+  },
+  "modules": [
+    {
+      "name": "qt5-qtbase",
+      "cleanup-platform": [
+        "/bin",
+        "/mkspecs"
+      ],
+      "post-install": [
+        "mkdir -p /usr/include/qtxcb-private",
+        "cp -r src/plugins/platforms/xcb/*.h /usr/include/qtxcb-private"
+      ],
+      "config-opts": [
+        "-confirm-license",
+        "-opensource",
+        "-debug",
+        "-shared",
+        "-platform",
+        "linux-g++",
+        "-optimized-qmake",
+        "-nomake",
+        "examples",
+        "-nomake",
+        "tests",
+        "-system-harfbuzz",
+        "-system-sqlite",
+        "-accessibility",
+        "-dbus-linked",
+        "-fontconfig",
+        "-glib",
+        "-icu",
+        "-openssl-linked",
+        "-no-pch",
+        "-no-rpath",
+        "-no-separate-debug-info",
+        "-reduce-relocations",
+        "-no-directfb",
+        "-no-linuxfb",
+        "-no-kms",
+        "-no-cups",
+        "-system-proxies",
+        "-gtk",
+        "-archdatadir",
+        "/usr/lib/"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "git://code.qt.io/qt/qtbase.git",
+          "branch": "v5.9.2"
+        },
+        {
+          "type": "shell",
+          "commands": [
+            "mv configure configure.qt"
+          ]
+        },
+        {
+          "type": "script",
+          "commands": [
+            "processed=`sed -e 's/--/-/g ; s/=/ /g' <<< $@`",
+            "./configure.qt $processed"
+          ],
+          "dest-filename": "configure"
         }
+      ]
     },
-    "modules": [
+    {
+      "name": "qt5-qtdeclarative",
+      "cleanup-platform": [
+        "/bin",
+        "/mkspecs"
+      ],
+      "sources": [
         {
-            "name": "qt5-qtbase",
-            "cleanup-platform": [
-                "/bin",
-                "/mkspecs"
-            ],
-            "post-install": [
-                "mkdir -p /usr/include/qtxcb-private",
-		"cp -r src/plugins/platforms/xcb/*.h /usr/include/qtxcb-private"
-            ],
-            "config-opts": [
-                "-confirm-license",
-                "-opensource",
-                "-debug",
-                "-shared",
-                "-platform",
-                "linux-g++",
-                "-optimized-qmake",
-                "-nomake",
-                "examples",
-                "-nomake",
-                "tests",
-                "-system-harfbuzz",
-                "-system-sqlite",
-                "-accessibility",
-                "-dbus-linked",
-                "-fontconfig",
-                "-glib",
-                "-icu",
-                "-openssl-linked",
-                "-no-pch",
-                "-no-rpath",
-                "-no-separate-debug-info",
-                "-reduce-relocations",
-                "-no-directfb",
-                "-no-linuxfb",
-                "-no-kms",
-                "-no-cups",
-                "-system-proxies",
-                "-gtk",
-                "-archdatadir",
-                "/usr/lib/"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "git://code.qt.io/qt/qtbase.git",
-                    "branch": "v5.9.2"
-                },
-                {
-                    "type": "shell",
-                    "commands": [
-                        "mv configure configure.qt"
-                    ]
-                },
-                {
-                    "type": "script",
-                    "commands": [
-                        "processed=`sed -e 's/--/-/g ; s/=/ /g' <<< $@`",
-                        "./configure.qt $processed"
-                    ],
-                    "dest-filename": "configure"
-                }
-            ]
+          "type": "git",
+          "url": "git://code.qt.io/qt/qtdeclarative.git",
+          "branch": "v5.9.2"
         },
         {
-            "name": "qt5-qtdeclarative",
-            "cleanup-platform": [
-                "/bin",
-                "/mkspecs"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "git://code.qt.io/qt/qtdeclarative.git",
-                    "branch": "v5.9.2"
-                },
-                {
-                    "type": "script",
-                    "commands": [
-                        "qmake"
-                    ],
-                    "dest-filename": "configure"
-                }
-            ]
-        },
-        {
-            "name": "qt5-qttools",
-            "cleanup-platform": [
-                "/mkspecs",
-                "/bin/assistant",
-                "/bin/qhelpgenerator",
-                "/bin/qcollectiongenerator",
-                "/bin/qhelpconverter",
-                "/bin/pixeltool",
-                "/bin/designer",
-                "/bin/lrelease",
-                "/bin/lupdate",
-                "/bin/lconvert",
-                "/bin/linguist",
-                "/bin/qdoc",
-                "/bin/qtattributionsscanner",
-                "/bin/qtplugininfo",
-                "/bin/qtdiag",
-                "/bin/qdbusviewer"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "git://code.qt.io/qt/qttools.git",
-                    "branch": "v5.9.2"
-                },
-                {
-                    "type": "script",
-                    "commands": [
-                        "qmake"
-                    ],
-                    "dest-filename": "configure"
-                }
-            ]
-        },
-        {
-            "name": "qt5-qtscript",
-            "cleanup-platform": [
-                "/bin",
-                "/mkspecs"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "git://code.qt.io/qt/qtscript.git",
-                    "branch": "v5.9.2"
-                },
-                {
-                    "type": "script",
-                    "commands": [
-                        "qmake"
-                    ],
-                    "dest-filename": "configure"
-                }
-            ]
-        },
-        {
-            "name": "pciutils",
-            "no-autogen": true,
-            "make-args": [
-                "SHARED=yes",
-                "ZLIB=no",
-                "PREFIX=/usr"
-            ],
-            "post-install": [
-                "make install-pcilib",
-                "make install-lib"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://github.com/Iceyer/pciutils.git",
-                    "branch": "v3.5.2"
-                },
-                {
-                    "type": "shell",
-                    "commands": [
-                        "sed -i 's@PREFIX=/usr/local@PREFIX=/usr@' Makefile"
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "qt5-qtsvg",
-            "cleanup-platform": [
-                "/bin",
-                "/mkspecs"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "git://code.qt.io/qt/qtsvg.git",
-                    "branch": "v5.9.2"
-                },
-                {
-                    "type": "script",
-                    "commands": [
-                        "qmake"
-                    ],
-                    "dest-filename": "configure"
-                }
-            ]
-        },
-        {
-            "name": "qt5-qtx11extras",
-            "cleanup-platform": [
-                "/bin",
-                "/mkspecs"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "git://code.qt.io/qt/qtx11extras.git",
-                    "branch": "v5.9.2"
-                },
-                {
-                    "type": "script",
-                    "commands": [
-                        "qmake"
-                    ],
-                    "dest-filename": "configure"
-                }
-            ]
-        },
-        {
-            "name": "qt5-qtmultimedia",
-            "cleanup-platform": [
-                "/bin",
-                "/mkspecs"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "git://code.qt.io/qt/qtmultimedia.git",
-                    "branch": "v5.9.2"
-                },
-                {
-                    "type": "script",
-                    "commands": [
-                        "qmake"
-                    ],
-                    "dest-filename": "configure"
-                }
-            ]
-        },
-        {
-            "name": "qt5-qtsensors",
-            "cleanup-platform": [
-                "/bin",
-                "/mkspecs"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "git://code.qt.io/qt/qtsensors.git",
-                    "branch": "v5.9.2"
-                },
-                {
-                    "type": "script",
-                    "commands": [
-                        "qmake"
-                    ],
-                    "dest-filename": "configure"
-                }
-            ]
-        },
-        {
-            "name": "qt5-qtgraphicaleffects",
-            "cleanup-platform": [
-                "/bin",
-                "/mkspecs"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "git://code.qt.io/qt/qtgraphicaleffects.git",
-                    "branch": "v5.9.2"
-                },
-                {
-                    "type": "script",
-                    "commands": [
-                        "qmake"
-                    ],
-                    "dest-filename": "configure"
-                }
-            ]
-        },
-        {
-            "name": "qt5-qtimageformats",
-            "cleanup-platform": [
-                "/bin",
-                "/mkspecs"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "git://code.qt.io/qt/qtimageformats.git",
-                    "branch": "v5.9.2"
-                },
-                {
-                    "type": "script",
-                    "commands": [
-                        "qmake"
-                    ],
-                    "dest-filename": "configure"
-                }
-            ]
-        },
-        {
-            "name": "mtdev",
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "http://bitmath.org/git/mtdev.git",
-                    "branch": "v1.1.5"
-                }
-            ]
-        },
-        {
-            "name": "libgtk2.0-dev",
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://github.com/GNOME/gtk.git",
-                    "branch": "gtk-2-24"
-                }
-            ]
-        },
-        {
-            "name": "libqtxdg",
-            "cleanup-platform": [
-                "/bin",
-                "/mkspecs"
-            ],
-            "cmake": true,
-            "config-opts": [
-                "-DENABLE_TESTING=OFF",
-                "-DCMAKE_INSTALL_LIBDIR=lib",
-                "-DWITH_DOC=OFF"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://github.com/lxde/libqtxdg.git",
-                    "branch": "2.0.0"
-                }
-            ]
-        },
-        {
-            "name": "libstartup-notification-1.0",
-            "cleanup-platform": [
-                "/bin",
-                "/mkspecs"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://anongit.freedesktop.org/git/startup-notification.git",
-                    "branch": "master"
-                }
-            ]
-        },
-        {
-            "name": "gsettings-qt",
-            "cleanup-platform": [
-                "/bin",
-                "/mkspecs"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://github.com/Iceyer/gsettings-qt.git",
-                    "branch": "cf744406f45481a961f8435e7628857432794a66"
-                },
-                {
-                    "type": "script",
-                    "commands": [
-                        "qmake"
-                    ],
-                    "dest-filename": "configure"
-                }
-            ]
-        },
-        {
-            "name": "deepin-icon-theme",
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "http://packages.deepin.com/professional/pool/main/d/deepin-icon-theme/deepin-icon-theme_15.12.46.orig.tar.xz",
-                    "sha256": "97113ceeb35583fe766456899a79cbac2b38d73fb7b67e6e66b13af4e193563c"
-                },
-                {
-                    "type": "script",
-                    "commands": [
-                        "true"
-                    ],
-                    "dest-filename": "configure"
-                }
-            ]
-        },
-        {
-            "name": "extra-cmake-modules",
-            "cleanup-platform": [
-                "*"
-            ],
-            "buildsystem": "cmake-ninja",
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "git://anongit.kde.org/extra-cmake-modules.git",
-                    "branch": "v5.36.0"
-                }
-            ]
-        },
-        {
-            "name": "xkbfile",
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://anongit.freedesktop.org/git/xorg/lib/libxkbfile.git",
-                    "branch": "libxkbfile-1.0.9"
-                }
-            ]
-        },
-        {
-            "name": "fcitx",
-            "cmake": true,
-            "config-opts": [
-                "-DENABLE_GTK2_IM_MODULE=OFF",
-                "-DENABLE_QT=OFF",
-                "-DENABLE_TESTING=OFF",
-                "-DCMAKE_INSTALL_LIBDIR=lib",
-                "-DWITH_DOC=OFF"
-            ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "http://pools.corp.deepin.com/deepin/pool/main/f/fcitx/fcitx_4.2.9.1.orig.tar.xz",
-                    "sha256": "5337c8226417a1d4e6f88b3b1048aa73695d281ed483568a7b6a9ee849ad6c77"
-                }
-            ]
-        },
-        {
-            "name": "fcitx-qt5",
-            "cmake": true,
-            "config-opts": [
-                "-DENABLE_TESTING=OFF",
-                "-DCMAKE_INSTALL_LIBDIR=lib",
-                "-DWITH_DOC=OFF"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://github.com/fcitx/fcitx-qt5.git",
-                    "branch": "1.1.0"
-                },
-                {
-                    "type": "patch",
-                    "path": "patch/0001-add-flatpak-support.patch"
-                }
-            ]
-        },
-
-        {
-            "name": "dtkcore",
-            "cleanup-platform": [
-                "/bin",
-                "/mkspecs"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://github.com/linuxdeepin/dtkcore.git",
-                    "branch": "a2624cebd5bfbedd94e9ec93c0b774e371c68808"
-                },
-                {
-                    "type": "script",
-                    "commands": [
-                        "qmake"
-                    ],
-                    "dest-filename": "configure"
-                }
-            ]
-        },
-        {
-            "name": "dtkwidget",
-            "cleanup-platform": [
-                "/bin",
-                "/mkspecs"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://github.com/linuxdeepin/dtkwidget.git",
-                    "branch": "84f12429374394bfb34ceb0b7830905b81bdd930"
-                },
-                {
-                    "type": "patch",
-                    "path": "patch/0001-dtkwidget.patch"
-                },
-                {
-                    "type": "script",
-                    "commands": [
-                        "qmake"
-                    ],
-                    "dest-filename": "configure"
-                }
-            ]
-        },
-        {
-            "name": "dtkwm",
-            "cleanup-platform": [
-                "/bin",
-                "/mkspecs"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://github.com/linuxdeepin/dtkwm.git",
-                    "branch": "e37b4c6e4716298b17bc1f3ddeba27ecc06ea2eb"
-                },
-                {
-                    "type": "script",
-                    "commands": [
-                        "qmake"
-                    ],
-                    "dest-filename": "configure"
-                }
-            ]
-        },
-        {
-            "name": "dde-qt5integration",
-            "cleanup-platform": [
-                "/bin",
-                "/mkspecs"
-            ],
-            "sources": [
-                {
-                    "type": "git",
-                    "url": "https://cr.deepin.io/qt5integration",
-                    "branch": "e9980bf9199d3a8493d9ee924c2e9e2e81c70ebf"
-                },
-		{
-		   "type": "patch",
-                   "path": "patch/0001-use-system-qt5-headers.patch"
-		},
-                {
-                    "type": "script",
-                    "commands": [
-                        "qmake"
-                    ],
-                    "dest-filename": "configure"
-                }
-            ]
-        },
-        {
-            "name": "os-release",
-            "post-install": [
-                "mkdir -p /usr/share/runtime/lib/plugins/"
-            ],
-            "sources": [
-                {
-                    "type": "file",
-                    "path": "os-release"
-                },
-                {
-                    "type": "file",
-                    "path": "issue"
-                },
-                {
-                    "type": "file",
-                    "path": "issue.net"
-                },
-                {
-                    "type": "file",
-                    "path": "com.deepin.Sdk.appdata.xml"
-                },
-                {
-                    "type": "file",
-                    "path": "com.deepin.Platform.appdata.xml"
-                },
-                {
-                    "type": "file",
-                    "path": "os-release-configure",
-                    "dest-filename": "configure"
-                }
-            ]
+          "type": "script",
+          "commands": [
+            "qmake"
+          ],
+          "dest-filename": "configure"
         }
-    ]
+      ]
+    },
+    {
+      "name": "qt5-qttools",
+      "cleanup-platform": [
+        "/mkspecs",
+        "/bin/assistant",
+        "/bin/qhelpgenerator",
+        "/bin/qcollectiongenerator",
+        "/bin/qhelpconverter",
+        "/bin/pixeltool",
+        "/bin/designer",
+        "/bin/lrelease",
+        "/bin/lupdate",
+        "/bin/lconvert",
+        "/bin/linguist",
+        "/bin/qdoc",
+        "/bin/qtattributionsscanner",
+        "/bin/qtplugininfo",
+        "/bin/qtdiag",
+        "/bin/qdbusviewer"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "git://code.qt.io/qt/qttools.git",
+          "branch": "v5.9.2"
+        },
+        {
+          "type": "script",
+          "commands": [
+            "qmake"
+          ],
+          "dest-filename": "configure"
+        }
+      ]
+    },
+    {
+      "name": "qt5-qtscript",
+      "cleanup-platform": [
+        "/bin",
+        "/mkspecs"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "git://code.qt.io/qt/qtscript.git",
+          "branch": "v5.9.2"
+        },
+        {
+          "type": "script",
+          "commands": [
+            "qmake"
+          ],
+          "dest-filename": "configure"
+        }
+      ]
+    },
+    {
+      "name": "pciutils",
+      "no-autogen": true,
+      "make-args": [
+        "SHARED=yes",
+        "ZLIB=no",
+        "PREFIX=/usr"
+      ],
+      "post-install": [
+        "make install-pcilib",
+        "make install-lib"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/Iceyer/pciutils.git",
+          "branch": "v3.5.2"
+        },
+        {
+          "type": "shell",
+          "commands": [
+            "sed -i 's@PREFIX=/usr/local@PREFIX=/usr@' Makefile"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "qt5-qtsvg",
+      "cleanup-platform": [
+        "/bin",
+        "/mkspecs"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "git://code.qt.io/qt/qtsvg.git",
+          "branch": "v5.9.2"
+        },
+        {
+          "type": "script",
+          "commands": [
+            "qmake"
+          ],
+          "dest-filename": "configure"
+        }
+      ]
+    },
+    {
+      "name": "qt5-qtx11extras",
+      "cleanup-platform": [
+        "/bin",
+        "/mkspecs"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "git://code.qt.io/qt/qtx11extras.git",
+          "branch": "v5.9.2"
+        },
+        {
+          "type": "script",
+          "commands": [
+            "qmake"
+          ],
+          "dest-filename": "configure"
+        }
+      ]
+    },
+    {
+      "name": "qt5-qtmultimedia",
+      "cleanup-platform": [
+        "/bin",
+        "/mkspecs"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "git://code.qt.io/qt/qtmultimedia.git",
+          "branch": "v5.9.2"
+        },
+        {
+          "type": "script",
+          "commands": [
+            "qmake"
+          ],
+          "dest-filename": "configure"
+        }
+      ]
+    },
+    {
+      "name": "qt5-qtsensors",
+      "cleanup-platform": [
+        "/bin",
+        "/mkspecs"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "git://code.qt.io/qt/qtsensors.git",
+          "branch": "v5.9.2"
+        },
+        {
+          "type": "script",
+          "commands": [
+            "qmake"
+          ],
+          "dest-filename": "configure"
+        }
+      ]
+    },
+    {
+      "name": "qt5-qtgraphicaleffects",
+      "cleanup-platform": [
+        "/bin",
+        "/mkspecs"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "git://code.qt.io/qt/qtgraphicaleffects.git",
+          "branch": "v5.9.2"
+        },
+        {
+          "type": "script",
+          "commands": [
+            "qmake"
+          ],
+          "dest-filename": "configure"
+        }
+      ]
+    },
+    {
+      "name": "qt5-qtimageformats",
+      "cleanup-platform": [
+        "/bin",
+        "/mkspecs"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "git://code.qt.io/qt/qtimageformats.git",
+          "branch": "v5.9.2"
+        },
+        {
+          "type": "script",
+          "commands": [
+            "qmake"
+          ],
+          "dest-filename": "configure"
+        }
+      ]
+    },
+    {
+      "name": "mtdev",
+      "sources": [
+        {
+          "type": "git",
+          "url": "http://bitmath.org/git/mtdev.git",
+          "branch": "v1.1.5"
+        }
+      ]
+    },
+    {
+      "name": "libgtk2.0-dev",
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/GNOME/gtk.git",
+          "branch": "gtk-2-24"
+        }
+      ]
+    },
+    {
+      "name": "libqtxdg",
+      "cleanup-platform": [
+        "/bin",
+        "/mkspecs"
+      ],
+      "cmake": true,
+      "config-opts": [
+        "-DENABLE_TESTING=OFF",
+        "-DCMAKE_INSTALL_LIBDIR=lib",
+        "-DWITH_DOC=OFF"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/lxde/libqtxdg.git",
+          "branch": "2.0.0"
+        }
+      ]
+    },
+    {
+      "name": "libstartup-notification-1.0",
+      "cleanup-platform": [
+        "/bin",
+        "/mkspecs"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://anongit.freedesktop.org/git/startup-notification.git",
+          "branch": "master"
+        }
+      ]
+    },
+    {
+      "name": "gsettings-qt",
+      "cleanup-platform": [
+        "/bin",
+        "/mkspecs"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/Iceyer/gsettings-qt.git",
+          "branch": "cf744406f45481a961f8435e7628857432794a66"
+        },
+        {
+          "type": "script",
+          "commands": [
+            "qmake"
+          ],
+          "dest-filename": "configure"
+        }
+      ]
+    },
+    {
+      "name": "deepin-icon-theme",
+      "sources": [
+        {
+          "type": "archive",
+          "url": "http://packages.deepin.com/professional/pool/main/d/deepin-icon-theme/deepin-icon-theme_15.12.46.orig.tar.xz",
+          "sha256": "97113ceeb35583fe766456899a79cbac2b38d73fb7b67e6e66b13af4e193563c"
+        },
+        {
+          "type": "script",
+          "commands": [
+            "true"
+          ],
+          "dest-filename": "configure"
+        }
+      ]
+    },
+    {
+      "name": "extra-cmake-modules",
+      "cleanup-platform": [
+        "*"
+      ],
+      "buildsystem": "cmake-ninja",
+      "sources": [
+        {
+          "type": "git",
+          "url": "git://anongit.kde.org/extra-cmake-modules.git",
+          "branch": "v5.36.0"
+        }
+      ]
+    },
+    {
+      "name": "xkbfile",
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://anongit.freedesktop.org/git/xorg/lib/libxkbfile.git",
+          "branch": "libxkbfile-1.0.9"
+        }
+      ]
+    },
+    {
+      "name": "fcitx",
+      "cmake": true,
+      "config-opts": [
+        "-DENABLE_GTK2_IM_MODULE=OFF",
+        "-DENABLE_QT=OFF",
+        "-DENABLE_TESTING=OFF",
+        "-DCMAKE_INSTALL_LIBDIR=lib",
+        "-DWITH_DOC=OFF"
+      ],
+      "sources": [
+        {
+          "type": "archive",
+          "url": "http://pools.corp.deepin.com/deepin/pool/main/f/fcitx/fcitx_4.2.9.1.orig.tar.xz",
+          "sha256": "5337c8226417a1d4e6f88b3b1048aa73695d281ed483568a7b6a9ee849ad6c77"
+        }
+      ]
+    },
+    {
+      "name": "fcitx-qt5",
+      "cmake": true,
+      "config-opts": [
+        "-DENABLE_TESTING=OFF",
+        "-DCMAKE_INSTALL_LIBDIR=lib",
+        "-DWITH_DOC=OFF"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/fcitx/fcitx-qt5.git",
+          "branch": "1.1.0"
+        },
+        {
+          "type": "patch",
+          "path": "patch/0001-add-flatpak-support.patch"
+        }
+      ]
+    },
+    {
+      "name": "dtkcore",
+      "cleanup-platform": [
+        "/bin",
+        "/mkspecs"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/linuxdeepin/dtkcore.git",
+          "branch": "2.0.1"
+        },
+        {
+          "type": "script",
+          "commands": [
+            "qmake"
+          ],
+          "dest-filename": "configure"
+        }
+      ]
+    },
+    {
+      "name": "dtkwidget",
+      "cleanup-platform": [
+        "/bin",
+        "/mkspecs"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/linuxdeepin/dtkwidget.git",
+          "branch": "2.0.1"
+        },
+        {
+          "type": "script",
+          "commands": [
+            "qmake DEFINES+=DTK_DBUS_SINGLEINSTANCE"
+          ],
+          "dest-filename": "configure"
+        }
+      ]
+    },
+    {
+      "name": "dtkwm",
+      "cleanup-platform": [
+        "/bin",
+        "/mkspecs"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/linuxdeepin/dtkwm.git",
+          "branch": "2.0.1"
+        },
+        {
+          "type": "script",
+          "commands": [
+            "qmake"
+          ],
+          "dest-filename": "configure"
+        }
+      ]
+    },
+    {
+      "name": "dde-qt5integration",
+      "cleanup-platform": [
+        "/bin",
+        "/mkspecs"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://cr.deepin.io/qt5integration",
+          "branch": "e9980bf9199d3a8493d9ee924c2e9e2e81c70ebf"
+        },
+        {
+          "type": "patch",
+          "path": "patch/0001-use-system-qt5-headers.patch"
+        },
+        {
+          "type": "script",
+          "commands": [
+            "qmake"
+          ],
+          "dest-filename": "configure"
+        }
+      ]
+    },
+    {
+      "name": "os-release",
+      "post-install": [
+        "mkdir -p /usr/share/runtime/lib/plugins/"
+      ],
+      "sources": [
+        {
+          "type": "file",
+          "path": "os-release"
+        },
+        {
+          "type": "file",
+          "path": "issue"
+        },
+        {
+          "type": "file",
+          "path": "issue.net"
+        },
+        {
+          "type": "file",
+          "path": "com.deepin.Sdk.appdata.xml"
+        },
+        {
+          "type": "file",
+          "path": "com.deepin.Platform.appdata.xml"
+        },
+        {
+          "type": "file",
+          "path": "os-release-configure",
+          "dest-filename": "configure"
+        }
+      ]
+    }
+  ]
 }
