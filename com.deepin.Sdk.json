@@ -524,6 +524,27 @@
       ]
     },
     {
+      "name": "libdframeworkdbus",
+      "cleanup-platform": [
+        "/bin",
+        "/mkspecs"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://cr.deepin.io/dde/dde-qt-dbus-factory",
+          "branch": "master"
+        },
+        {
+          "type": "script",
+          "commands": [
+            "qmake"
+          ],
+          "dest-filename": "configure"
+        }
+      ]
+    },
+    {
       "name": "dtkcore",
       "cleanup-platform": [
         "/bin",
