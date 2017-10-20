@@ -1,5 +1,5 @@
 #!/bin/sh
-if flatpak info --system com.deepin.Platform/x86_64/15.5 >/dev/null 2>&1; then
-	flatpak uninstall --system com.deepin.Platform/x86_64/15.5
+if flatpak info --system com.deepin.Platform/x86_64/15.5.2 >/dev/null 2>&1; then
+	flatpak uninstall --system com.deepin.Platform/x86_64/15.5.2
 fi
 exit 0
