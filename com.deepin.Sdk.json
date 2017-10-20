@@ -579,7 +579,7 @@
         {
           "type": "git",
           "url": "https://github.com/linuxdeepin/dtkcore.git",
-          "branch": "2.0.1"
+          "branch": "master"
         },
         {
           "type": "script",
@@ -600,7 +600,7 @@
         {
           "type": "git",
           "url": "https://github.com/linuxdeepin/dtkwidget.git",
-          "branch": "2.0.1"
+          "branch": "master"
         },
         {
           "type": "script",
@@ -621,7 +621,7 @@
         {
           "type": "git",
           "url": "https://github.com/linuxdeepin/dtkwm.git",
-          "branch": "2.0.1"
+          "branch": "master"
         },
         {
           "type": "script",
