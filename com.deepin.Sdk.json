@@ -393,7 +393,7 @@
         },
         {
           "type": "patch",
-          "path": "patch/dde-file-dialog.path"
+          "path": "patch/dde-file-dialog.patch"
         }
       ]
     },
