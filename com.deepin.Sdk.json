@@ -553,23 +553,6 @@
       ]
     },
     {
-	    "name": "deepin-gettext-tools",
-	    "sources": [
-		    {
-			    "type": "git",
-			    "url": "https://github.com/linuxdeepin/deepin-gettext-tools.git",
-			    "branch": "master"
-		    }, 
-		    {
-			    "type": "script",
-			    "commands": [
-				    "true"
-			    ],
-			    "dest-filename": "configure"
-		    }
-	    ]
-    },
-    {
       "name": "dtkcore",
       "cleanup-platform": [
         "/bin",
