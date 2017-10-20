@@ -386,6 +386,14 @@
           "type": "git",
           "url": "https://github.com/GNOME/gtk.git",
           "branch": "gtk-2-24"
+        },
+        {
+          "type": "patch",
+          "path": "patch/add-dde-file-dialog.patch"
+        },
+        {
+          "type": "patch",
+          "path": "patch/dde-file-dialog.path"
         }
       ]
     },
