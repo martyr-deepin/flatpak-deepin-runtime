@@ -2,7 +2,7 @@
   "build-runtime": true,
   "id": "com.deepin.Sdk",
   "id-platform": "com.deepin.Platform",
-  "branch": "15.5",
+  "branch": "15.5.2",
   "runtime": "org.freedesktop.Platform",
   "sdk": "org.freedesktop.Sdk",
   "runtime-version": "1.6",
@@ -551,6 +551,23 @@
           "dest-filename": "configure"
         }
       ]
+    },
+    {
+	    "name": "deepin-gettext-tools",
+	    "sources": [
+		    {
+			    "type": "git",
+			    "url": "https://github.com/linuxdeepin/deepin-gettext-tools.git",
+			    "branch": "master"
+		    }, 
+		    {
+			    "type": "script",
+			    "commands": [
+				    "true"
+			    ],
+			    "dest-filename": "configure"
+		    }
+	    ]
     },
     {
       "name": "dtkcore",
