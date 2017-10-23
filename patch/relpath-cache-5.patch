@@ -1,0 +1,119 @@
+From b0796a79f932209134b5c9c6859be7d744ddc9ba Mon Sep 17 00:00:00 2001
+From: Akira TAGOH <akira@tagoh.org>
+Date: Tue, 3 Oct 2017 13:08:54 +0900
+Subject: Destroy the alias and UUID tables when all of caches is unloaded
+
+When a cache contains no fonts, it will be unloaded immediately.
+Previously the certain alias and UUID entries will be purged at that time though,
+this doesn't work when the targeted directory has sub-directories.
+To avoid the unnecessary cache creation with the md5-based naming, try to keep them
+as far as possible.
+Although this way seems not perfectly working if the first directory to look up is like that
+
+diff --git a/src/fccache.c b/src/fccache.c
+index 0e6f9d6..d9cb8a1 100644
+--- a/src/fccache.c
++++ b/src/fccache.c
+@@ -88,28 +88,24 @@ FcCacheUuidAdd (FcUuidHashTable *table,
+     return FcTrue;
+ }
+ 
+-static FcBool
+-FcCacheUuidRemove (FcUuidHashTable *table,
+-		   const FcChar8   *file)
++static void
++FcCacheUuidDestroy (FcUuidHashTable *table)
+ {
+-    FcUuidBucket **prev, *bucket;
+-    FcChar32 hash = FcStrHashIgnoreCase (file);
++    int i;
+ 
+-    for (prev = &table->buckets[hash % FC_UUID_HASH_SIZE];
+-	 (bucket = *prev); )
++    for (i = 0; i < FC_UUID_HASH_SIZE; i++)
+     {
+-	if (FcStrCmp (bucket->file, file) == 0)
++	FcUuidBucket *bucket = table->buckets[i], *prev;
++
++	while (bucket)
+ 	{
+-	    *prev = bucket->next;
+ 	    FcStrFree (bucket->file);
+-	    free (bucket);
+-
+-	    return FcTrue;
++	    prev = bucket;
++	    bucket = bucket->next;
++	    free (prev);
+ 	}
+-	else
+-	    prev = &(bucket->next);
++	table->buckets[i] = NULL;
+     }
+-    return FcFalse;
+ }
+ 
+ static FcBool
+@@ -269,29 +265,25 @@ FcCacheAliasAdd (FcAliasHashTable *table,
+     return FcTrue;
+ }
+ 
+-static FcBool
+-FcCacheAliasRemove (FcAliasHashTable *table,
+-		    const FcChar8    *orig)
++static void
++FcCacheAliasDestroy (FcAliasHashTable *table)
+ {
+-    FcAliasBucket **prev, *bucket;
+-    FcChar32 hash = FcStrHashIgnoreCase (orig);
++    int i;
+ 
+-    for (prev = &table->buckets[hash % FC_ALIAS_HASH_SIZE];
+-	 (bucket = *prev); )
++    for (i = 0; i < FC_ALIAS_HASH_SIZE; i++)
+     {
+-	if (FcStrCmp (bucket->orig, orig) == 0)
++	FcAliasBucket *bucket = table->buckets[i], *prev;
++
++	while (bucket)
+ 	{
+-	    *prev = bucket->next;
++	    prev = bucket;
+ 	    FcStrFree (bucket->orig);
+ 	    FcStrFree (bucket->alias);
+-	    free (bucket);
+-
+-	    return FcTrue;
++	    bucket = bucket->next;
++	    free (prev);
+ 	}
+-	else
+-	    prev = &(bucket->next);
++	table->buckets[i] = NULL;
+     }
+-    return FcFalse;
+ }
+ 
+ static FcBool
+@@ -841,13 +833,12 @@ FcCacheObjectDereference (void *object)
+     {
+ 	if (FcRefDec (&skip->ref) == 1)
+ 	{
+-	    const FcChar8 *d = FcDirCacheFindAliasPath (FcCacheDir (skip->cache));
+-
+-	    FcCacheUuidRemove (&uuid_table, FcCacheDir (skip->cache));
+-	    if (d)
+-		FcCacheUuidRemove (&uuid_table, d);
+-	    FcCacheAliasRemove (&alias_table, FcCacheDir (skip->cache));
+ 	    FcDirCacheDisposeUnlocked (skip->cache);
++	    if (fcCacheMaxLevel == 0)
++	    {
++		FcCacheUuidDestroy (&uuid_table);
++		FcCacheAliasDestroy (&alias_table);
++	    }
+ 	}
+     }
+     unlock_cache ();
+-- 
+cgit v0.10.2
+

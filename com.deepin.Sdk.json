@@ -553,6 +553,23 @@
       ]
     },
     {
+      "name":"fontconfig",
+      "source":[
+	      {
+	        "type": "git",
+	        "url": "git://people.freedesktop.org/~tagoh/fontconfig",
+		"branch": "master"
+	      },
+	      {
+	        "type": "patch",
+		"path": "patch/relpath-cache-5.patch"
+	      }
+
+
+      ]
+
+    },
+    {
 	    "name": "deepin-gettext-tools",
 	    "sources": [
 		    {
