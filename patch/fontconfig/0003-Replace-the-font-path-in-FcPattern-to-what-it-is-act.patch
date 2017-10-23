@@ -1,0 +1,109 @@
+From 59bde00a4e4260faaff9476ff608ae320336354d Mon Sep 17 00:00:00 2001
+From: Akira TAGOH <akira@tagoh.org>
+Date: Thu, 7 Sep 2017 19:43:59 +0900
+Subject: [PATCH 3/7] Replace the font path in FcPattern to what it is actually
+ located.
+
+---
+ src/fclist.c  | 41 ++++++++++++++++++++++++++++++++++++++++-
+ src/fcmatch.c | 32 ++++++++++++++++++++++++++++++++
+ 2 files changed, 72 insertions(+), 1 deletion(-)
+
+diff --git a/src/fclist.c b/src/fclist.c
+index d7e8fc0..d7cd5c8 100644
+--- a/src/fclist.c
++++ b/src/fclist.c
+@@ -448,7 +448,46 @@ FcListAppend (FcListHashTable	*table,
+ 	e = FcPatternObjectFindElt (font, FcObjectFromName (os->objects[o]));
+ 	if (e)
+ 	{
+-	    for (v = FcPatternEltValues(e), idx = 0; v;
++	    idx = 0;
++	    if (FcRefIsConst (&font->ref) && !strcmp (os->objects[o], FC_FILE))
++	    {
++		struct stat statb;
++
++		for (v = FcPatternEltValues (e); v->value.type != FcTypeString; v = FcValueListNext (v));
++		if (!v)
++		    goto bail2;
++		if (FcStat (FcValueString (&v->value), &statb) < 0)
++		{
++		    FcChar8 *dir = FcStrDirname (FcValueString (&v->value));
++		    const FcChar8 *alias;
++
++		    if ((alias = FcDirCacheFindAliasPath (dir)))
++		    {
++			FcChar8 *base = FcStrBasename (FcValueString (&v->value));
++			FcChar8 *s = FcStrBuildFilename (alias, base, NULL);
++			FcValue vv;
++
++			FcStrFree (base);
++			vv.type = FcTypeString;
++			vv.u.s = s;
++			if (!FcPatternAdd (bucket->pattern,
++					   os->objects[o],
++					   FcValueCanonicalize (&vv),
++					   FcTrue))
++			{
++			    FcStrFree (s);
++			    FcStrFree (dir);
++			    goto bail2;
++			}
++			FcStrFree (s);
++			FcStrFree (dir);
++			idx++;
++		    }
++		    else
++			FcStrFree (dir);
++		}
++	    }
++	    for (v = FcPatternEltValues(e); v;
+ 		 v = FcValueListNext(v), ++idx)
+ 	    {
+ 		if (!FcPatternAdd (bucket->pattern,
+diff --git a/src/fcmatch.c b/src/fcmatch.c
+index d5eaea7..30070f4 100644
+--- a/src/fcmatch.c
++++ b/src/fcmatch.c
+@@ -643,6 +643,38 @@ FcFontRenderPrepare (FcConfig	    *config,
+ 	}
+ 	else
+ 	{
++	    if (FcRefIsConst (&font->ref) && fe->object == FC_FILE_OBJECT)
++	    {
++		FcValueListPtr l = FcPatternEltValues (fe);
++		struct stat statb;
++
++		while (l->value.type != FcTypeString)
++		    l = FcValueListNext (l);
++		if (FcStat (FcValueString (&l->value), &statb) < 0)
++		{
++		    FcChar8 *dir = FcStrDirname (FcValueString (&l->value));
++		    const FcChar8 *alias;
++
++		    if ((alias = FcDirCacheFindAliasPath (dir)))
++		    {
++			FcChar8 *base = FcStrBasename (FcValueString (&l->value));
++			FcChar8 *s = FcStrBuildFilename (alias, base, NULL);
++			FcValue v;
++
++			FcStrFree (base);
++			v.type = FcTypeString;
++			v.u.s = s;
++			FcPatternObjectAddWithBinding (new, fe->object,
++						       FcValueCanonicalize (&v),
++						       l->binding,
++						       FcTrue);
++			FcStrFree (s);
++			FcStrFree (dir);
++		    }
++		    else
++			FcStrFree (dir);
++		}
++	    }
+ 	    FcPatternObjectListAdd (new, fe->object,
+ 				    FcValueListDuplicate (FcPatternEltValues (fe)),
+ 				    FcTrue);
+-- 
+2.13.3
+

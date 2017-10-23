@@ -1,7 +1,8 @@
 From b0796a79f932209134b5c9c6859be7d744ddc9ba Mon Sep 17 00:00:00 2001
 From: Akira TAGOH <akira@tagoh.org>
 Date: Tue, 3 Oct 2017 13:08:54 +0900
-Subject: Destroy the alias and UUID tables when all of caches is unloaded
+Subject: [PATCH 7/7] Destroy the alias and UUID tables when all of caches is
+ unloaded
 
 When a cache contains no fonts, it will be unloaded immediately.
 Previously the certain alias and UUID entries will be purged at that time though,
@@ -9,6 +10,9 @@ this doesn't work when the targeted directory has sub-directories.
 To avoid the unnecessary cache creation with the md5-based naming, try to keep them
 as far as possible.
 Although this way seems not perfectly working if the first directory to look up is like that
+---
+ src/fccache.c | 63 +++++++++++++++++++++++++----------------------------------
+ 1 file changed, 27 insertions(+), 36 deletions(-)
 
 diff --git a/src/fccache.c b/src/fccache.c
 index 0e6f9d6..d9cb8a1 100644
@@ -115,5 +119,5 @@ index 0e6f9d6..d9cb8a1 100644
      }
      unlock_cache ();
 -- 
-cgit v0.10.2
+2.13.3
 

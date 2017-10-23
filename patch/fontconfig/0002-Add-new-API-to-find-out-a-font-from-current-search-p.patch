@@ -1,0 +1,272 @@
+From b6feec811814d988c57d28a5fce6c5f4c7f620b6 Mon Sep 17 00:00:00 2001
+From: Akira TAGOH <akira@tagoh.org>
+Date: Wed, 2 Aug 2017 11:02:19 +0100
+Subject: [PATCH 2/7] Add new API to find out a font from current search path
+
+---
+ doc/fcpattern.fncs      |  10 ++++
+ fontconfig/fontconfig.h |   3 ++
+ src/fccache.c           | 127 +++++++++++++++++++++++++++++++++++++++++++++++-
+ src/fcint.h             |   3 ++
+ src/fcpat.c             |  30 ++++++++++++
+ 5 files changed, 171 insertions(+), 2 deletions(-)
+
+diff --git a/doc/fcpattern.fncs b/doc/fcpattern.fncs
+index 928f0bc..912d43d 100644
+--- a/doc/fcpattern.fncs
++++ b/doc/fcpattern.fncs
+@@ -313,6 +313,16 @@ in preference to FcPatternGet to provide compile-time typechecking.
+ <function>FcPatternGetRange</function> are available since 2.11.91.
+ @@
+ 
++@RET@		FcResult
++@FUNC@		FcPatternFindFont
++@TYPE1@		const FcPattern *		@ARG1@		p
++@TYPE3@		FcChar8 **			@ARG3@		ret
++@PURPOSE@	Find a font corresponding to a filename in a pattern
++@DESC@
++Returns a filename in <parameter>p</parameter> to the font.
++@SINCE@		2.13.0
++@@
++
+ @RET@		FcPattern *
+ @FUNC@		FcPatternBuild
+ @TYPE1@		FcPattern *			@ARG1@		pattern
+diff --git a/fontconfig/fontconfig.h b/fontconfig/fontconfig.h
+index 0f4dcb9..c70227f 100644
+--- a/fontconfig/fontconfig.h
++++ b/fontconfig/fontconfig.h
+@@ -908,6 +908,9 @@ FcPatternGetLangSet (const FcPattern *p, const char *object, int n, FcLangSet **
+ FcPublic FcResult
+ FcPatternGetRange (const FcPattern *p, const char *object, int id, FcRange **r);
+ 
++FcPublic FcResult
++FcPatternFindFont (const FcPattern *p, FcChar8 **s);
++
+ FcPublic FcPattern *
+ FcPatternVaBuild (FcPattern *p, va_list va);
+     
+diff --git a/src/fccache.c b/src/fccache.c
+index 86298a1..0e6f9d6 100644
+--- a/src/fccache.c
++++ b/src/fccache.c
+@@ -221,6 +221,115 @@ FcDirCacheReadUUID (const FcChar8 *dir)
+     }
+ }
+ 
++#define FC_ALIAS_HASH_SIZE 4099
++
++typedef struct _FcAliasBucket {
++    struct _FcAliasBucket *next;
++    FcChar8               *orig;
++    FcChar8               *alias;
++} FcAliasBucket;
++
++typedef struct _FcAliasHashTable {
++    FcAliasBucket *buckets[FC_ALIAS_HASH_SIZE];
++} FcAliasHashTable;
++
++static FcAliasHashTable alias_table;
++
++static FcBool
++FcCacheAliasAdd (FcAliasHashTable *table,
++		 const FcChar8    *orig,
++		 const FcChar8    *alias)
++{
++    FcAliasBucket **prev, *bucket;
++    FcChar32 hash = FcStrHashIgnoreCase (orig);
++
++    for (prev = &table->buckets[hash % FC_ALIAS_HASH_SIZE];
++	 (bucket = *prev); prev = &(bucket->next))
++    {
++	if (FcStrCmp (bucket->orig, orig) == 0)
++	    return FcTrue;
++    }
++    bucket = (FcAliasBucket *) malloc (sizeof (FcAliasBucket));
++    if (!bucket)
++	return FcFalse;
++    bucket->next = NULL;
++    bucket->orig = FcStrdup (orig);
++    bucket->alias = FcStrdup (alias);
++    if (!bucket->orig || !bucket->alias)
++    {
++	if (bucket->orig)
++	    FcStrFree (bucket->orig);
++	if (bucket->alias)
++	    FcStrFree (bucket->alias);
++	free (bucket);
++	return FcFalse;
++    }
++    *prev = bucket;
++
++    return FcTrue;
++}
++
++static FcBool
++FcCacheAliasRemove (FcAliasHashTable *table,
++		    const FcChar8    *orig)
++{
++    FcAliasBucket **prev, *bucket;
++    FcChar32 hash = FcStrHashIgnoreCase (orig);
++
++    for (prev = &table->buckets[hash % FC_ALIAS_HASH_SIZE];
++	 (bucket = *prev); )
++    {
++	if (FcStrCmp (bucket->orig, orig) == 0)
++	{
++	    *prev = bucket->next;
++	    FcStrFree (bucket->orig);
++	    FcStrFree (bucket->alias);
++	    free (bucket);
++
++	    return FcTrue;
++	}
++	else
++	    prev = &(bucket->next);
++    }
++    return FcFalse;
++}
++
++static FcBool
++FcCacheAliasFind (FcAliasHashTable *table,
++		  const FcChar8    *orig,
++		  const FcChar8    **ret)
++{
++    FcAliasBucket *bucket;
++    FcChar32 hash = FcStrHashIgnoreCase (orig);
++
++    for (bucket = table->buckets[hash % FC_ALIAS_HASH_SIZE]; bucket; bucket = bucket->next)
++    {
++	if (FcStrCmp (bucket->orig, orig) == 0)
++	{
++	    *ret = bucket->alias;
++	    return FcTrue;
++	}
++    }
++    return FcFalse;
++}
++
++static void
++FcDirCacheAddAliasPath (const FcChar8 *orig,
++			const FcChar8 *alias)
++{
++    FcCacheAliasAdd (&alias_table, orig, alias);
++}
++
++const FcChar8 *
++FcDirCacheFindAliasPath (const FcChar8 *dir)
++{
++    const FcChar8 *ret = NULL;
++
++    if (FcCacheAliasFind (&alias_table, dir, &ret))
++	return ret;
++    return NULL;
++}
++
+ struct MD5Context {
+         FcChar32 buf[4];
+         FcChar32 bits[2];
+@@ -300,8 +409,12 @@ static FcChar8 *
+ FcDirCacheBasenameUUID (const FcChar8 *dir, FcChar8 cache_base[CACHEBASE_LEN])
+ {
+     uuid_t uuid;
++    const FcChar8 *alias;
+ 
+-    if (FcCacheUuidFind (&uuid_table, dir, uuid))
++    alias = FcDirCacheFindAliasPath (dir);
++    if (!alias)
++	alias = dir;
++    if (FcCacheUuidFind (&uuid_table, alias, uuid))
+     {
+ 	uuid_unparse (uuid, (char *) cache_base);
+ 	strcat ((char *) cache_base, "-" FC_ARCHITECTURE FC_CACHE_SUFFIX);
+@@ -728,7 +841,12 @@ FcCacheObjectDereference (void *object)
+     {
+ 	if (FcRefDec (&skip->ref) == 1)
+ 	{
++	    const FcChar8 *d = FcDirCacheFindAliasPath (FcCacheDir (skip->cache));
++
+ 	    FcCacheUuidRemove (&uuid_table, FcCacheDir (skip->cache));
++	    if (d)
++		FcCacheUuidRemove (&uuid_table, d);
++	    FcCacheAliasRemove (&alias_table, FcCacheDir (skip->cache));
+ 	    FcDirCacheDisposeUnlocked (skip->cache);
+ 	}
+     }
+@@ -987,12 +1105,17 @@ FcCache *
+ FcDirCacheLoad (const FcChar8 *dir, FcConfig *config, FcChar8 **cache_file)
+ {
+     FcCache *cache = NULL;
++    const FcChar8 *d;
+ 
++    FcDirCacheReadUUID (dir);
+     if (!FcDirCacheProcess (config, dir,
+ 			    FcDirCacheMapHelper,
+ 			    &cache, cache_file))
+ 	return NULL;
+-    FcDirCacheReadUUID (FcCacheDir (cache));
++
++    d = FcCacheDir (cache);
++    if (FcStrCmp (dir, d))
++	FcDirCacheAddAliasPath (d, dir);
+ 
+     return cache;
+ }
+diff --git a/src/fcint.h b/src/fcint.h
+index 3885cf4..9dcde05 100644
+--- a/src/fcint.h
++++ b/src/fcint.h
+@@ -562,6 +562,9 @@ FcPrivate FcBool
+ FcDirCacheCreateUUID (const FcChar8 *dir,
+ 		      FcBool         force);
+ 
++FcPrivate const FcChar8 *
++FcDirCacheFindAliasPath (const FcChar8 *dir);
++
+ FcPrivate FcCache *
+ FcDirCacheScan (const FcChar8 *dir, FcConfig *config);
+ 
+diff --git a/src/fcpat.c b/src/fcpat.c
+index dd1307d..707afc0 100644
+--- a/src/fcpat.c
++++ b/src/fcpat.c
+@@ -1105,6 +1105,36 @@ FcPatternGetRange (const FcPattern *p, const char *object, int id, FcRange **r)
+     return FcPatternObjectGetRange (p, FcObjectFromName (object), id, r);
+ }
+ 
++FcResult
++FcPatternFindFont (const FcPattern *p, FcChar8 **s)
++{
++    FcChar8 *file;
++    FcResult ret = FcResultNoMatch;
++
++    if (FcPatternObjectGetString (p, FC_FILE_OBJECT, 0, &file) == FcResultMatch)
++    {
++	FcChar8 *dir = FcStrDirname (file);
++	const FcChar8 *alias;
++
++	if ((alias = FcDirCacheFindAliasPath (dir)))
++	{
++	    FcChar8 *font = FcStrBasename (file);
++
++	    if (s)
++		*s = FcStrBuildFilename (alias, font, NULL);
++	    FcStrFree (font);
++	}
++	else
++	{
++	    if (s)
++		*s = FcStrdup (file);
++	}
++	ret = FcResultMatch;
++	FcStrFree (dir);
++    }
++    return ret;
++}
++
+ FcPattern *
+ FcPatternDuplicate (const FcPattern *orig)
+ {
+-- 
+2.13.3
+

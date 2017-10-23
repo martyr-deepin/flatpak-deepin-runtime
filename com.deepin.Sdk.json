@@ -527,7 +527,7 @@
         },
         {
           "type": "patch",
-          "path": "patch/0001-add-flatpak-support.patch"
+          "path": "patch/fcitx/0001-add-flatpak-support.patch"
         }
       ]
     },
@@ -553,38 +553,79 @@
       ]
     },
     {
-      "name":"fontconfig",
-      "source":[
-	      {
-	        "type": "git",
-	        "url": "git://people.freedesktop.org/~tagoh/fontconfig",
-		"branch": "master"
-	      },
-	      {
-	        "type": "patch",
-		"path": "patch/relpath-cache-5.patch"
-	      }
-
-
+      "name": "freetype",
+      "config-opts": [
+        "--disable-static",
+        "--with-zlib=yes",
+        "--with-bzip2=yes",
+        "--with-png=yes",
+        "--with-harfbuzz=yes"
+      ],
+      "cleanup-platform": [
+        "/bin/freetype-config"
+      ],
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://sourceforge.net/projects/freetype/files/freetype2/2.8.1/freetype-2.8.1.tar.bz2",
+          "sha256": "e5435f02e02d2b87bb8e4efdcaa14b1f78c9cf3ab1ed80f94b6382fb6acc7d78"
+        }
       ]
-
     },
     {
-	    "name": "deepin-gettext-tools",
-	    "sources": [
-		    {
-			    "type": "git",
-			    "url": "https://github.com/linuxdeepin/deepin-gettext-tools.git",
-			    "branch": "master"
-		    }, 
-		    {
-			    "type": "script",
-			    "commands": [
-				    "true"
-			    ],
-			    "dest-filename": "configure"
-		    }
-	    ]
+      "name": "fontconfig",
+      "sources": [
+        {
+          "type": "git",
+          "url": "git://people.freedesktop.org/~tagoh/fontconfig",
+          "branch": "master"
+        },
+        {
+          "type": "patch",
+          "path": "patch/fontconfig/0001-Use-uuid-based-cache-filename-if-uuid-is-assigned-to.patch"
+        },
+        {
+          "type": "patch",
+          "path": "patch/fontconfig/0002-Add-new-API-to-find-out-a-font-from-current-search-p.patch"
+        },
+        {
+          "type": "patch",
+          "path": "patch/fontconfig/0003-Replace-the-font-path-in-FcPattern-to-what-it-is-act.patch"
+        },
+        {
+          "type": "patch",
+          "path": "patch/fontconfig/0004-Replace-the-original-path-to-the-new-one.patch"
+        },
+        {
+          "type": "patch",
+          "path": "patch/fontconfig/0005-Replace-the-path-of-subdirs-in-caches-as-well.patch"
+        },
+        {
+          "type": "patch",
+          "path": "patch/fontconfig/0006-Don-t-call-FcStat-when-the-alias-has-already-been-ad.patch"
+        },
+        {
+          "type": "patch",
+          "path": "patch/fontconfig/0007-Destroy-the-alias-and-UUID-tables-when-all-of-caches.patch"
+        }
+      ]
+    },
+    {
+      "name": "deepin-gettext-tools",
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/linuxdeepin/deepin-gettext-tools.git",
+          "branch": "master"
+        },
+        {
+          "type": "script",
+          "commands": [
+            "true"
+          ],
+          "dest-filename": "configure"
+        }
+      ]
     },
     {
       "name": "dtkcore",
