@@ -2,7 +2,7 @@ REPO=repo
 TMP=sdk
 ARGS="--user"
 ARCH?=$(shell flatpak --default-arch)
-BUILDER_OPTIONS = --rebuild-on-sdk-change --require-changes --ccache --force-clean
+BUILDER_OPTIONS = --rebuild-on-sdk-change --require-changes --ccache --force-clean --disable-updates
 
 all: $(REPO)/config $(foreach file, $(wildcard *.json), $(subst .json,.app,$(file)))
 

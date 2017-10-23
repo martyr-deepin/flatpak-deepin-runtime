@@ -125,6 +125,22 @@
           "branch": "v5.9.2"
         },
         {
+          "type": "patch",
+          "path": "patch/hidpi/0001-High-dpi-drawTiledPixmap-raster-paint-engine.patch"
+        },
+        {
+          "type": "patch",
+          "path": "patch/hidpi/0002-StyleSheetStyle-Load-Nx-images.patch"
+        },
+        {
+          "type": "patch",
+          "path": "patch/hidpi/0003-StyleSheetStyle-fix-distorted-hiDPI-pngs.patch"
+        },
+        {
+          "type": "patch",
+          "path": "patch/hidpi/0008-load-qss-svg-by-scale.patch"
+        },
+        {
           "type": "shell",
           "commands": [
             "mv configure configure.qt"
