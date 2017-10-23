@@ -1,0 +1,23 @@
+From a5c3451e5284d3f6b598f7dc9d046136e1e03df8 Mon Sep 17 00:00:00 2001
+From: flatpak-builder <flatpak-builder@localhost.pc>
+Date: Mon, 23 Oct 2017 16:09:14 +0800
+Subject: [PATCH] avoid devhelp doc install
+
+---
+ doc/Makefile.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/doc/Makefile.am b/doc/Makefile.am
+index 0cc0a50f..264cfc96 100644
+--- a/doc/Makefile.am
++++ b/doc/Makefile.am
+@@ -1,5 +1,5 @@
+ ## Process this file with automake to produce Makefile.in
+-SUBDIRS = . devhelp examples
++SUBDIRS = . examples
+ 
+ # The top-level SGML file.
+ DOC_MAIN_XML_FILE=gnome-xml.xml
+-- 
+2.14.2
+

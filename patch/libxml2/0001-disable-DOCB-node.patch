@@ -1,0 +1,76 @@
+From 79336b5184421a2d544917aba45e1652f1a9f6b7 Mon Sep 17 00:00:00 2001
+From: lilongyu <lilongyu@deepin.com>
+Date: Mon, 23 Oct 2017 23:38:11 +0800
+Subject: [PATCH] disable DOCB node
+
+---
+ LibXML.xs        | 5 +----
+ dom.c            | 1 -
+ perl-libxml-mm.c | 2 --
+ 3 files changed, 1 insertion(+), 7 deletions(-)
+
+diff --git a/LibXML.xs b/LibXML.xs
+index ad415c8..28435fe 100644
+--- a/LibXML.xs
++++ b/LibXML.xs
+@@ -5039,7 +5039,6 @@ addChild( self, nNode )
+             XSRETURN_UNDEF;
+         case XML_DOCUMENT_NODE :
+         case XML_HTML_DOCUMENT_NODE :
+-        case XML_DOCB_DOCUMENT_NODE :
+             croak("addChild: HIERARCHY_REQUEST_ERR\n");
+             XSRETURN_UNDEF;
+         case XML_NOTATION_NODE :
+@@ -5299,7 +5298,6 @@ _toStringC14N(self, comments=0, xpath=&PL_sv_undef, exclusive=0, inc_prefix_list
+         if ( nodepath == NULL
+              && self->type != XML_DOCUMENT_NODE
+              && self->type != XML_HTML_DOCUMENT_NODE
+-             && self->type != XML_DOCB_DOCUMENT_NODE
+            ) {
+             if (comments)
+ 	      nodepath = xmlStrdup( (const xmlChar *) "(. | .//node() | .//@* | .//namespace::*)" );
+@@ -5309,8 +5307,7 @@ _toStringC14N(self, comments=0, xpath=&PL_sv_undef, exclusive=0, inc_prefix_list
+ 
+         if ( nodepath != NULL ) {
+             if ( self->type == XML_DOCUMENT_NODE
+-                 || self->type == XML_HTML_DOCUMENT_NODE
+-                 || self->type == XML_DOCB_DOCUMENT_NODE ) {
++                 || self->type == XML_HTML_DOCUMENT_NODE ) {
+                 refNode = xmlDocGetRootElement( self->doc );
+             }
+ 	    if (SvOK(xpath_context)) {
+diff --git a/dom.c b/dom.c
+index 87eb61d..104e0ff 100644
+--- a/dom.c
++++ b/dom.c
+@@ -654,7 +654,6 @@ domName(xmlNodePtr node) {
+ 
+     case XML_DOCUMENT_NODE :
+     case XML_HTML_DOCUMENT_NODE :
+-    case XML_DOCB_DOCUMENT_NODE :
+         name = (const xmlChar *) "#document";
+         break;
+ 
+diff --git a/perl-libxml-mm.c b/perl-libxml-mm.c
+index d162b06..8a1ef8a 100644
+--- a/perl-libxml-mm.c
++++ b/perl-libxml-mm.c
+@@ -331,7 +331,6 @@ PmmNewNode(xmlNodePtr node)
+         switch ( node->type ) {
+         case XML_DOCUMENT_NODE:
+         case XML_HTML_DOCUMENT_NODE:
+-        case XML_DOCB_DOCUMENT_NODE:
+             proxy = (ProxyNodePtr)xmlMalloc(sizeof(struct _DocProxyNode));
+             if (proxy != NULL) {
+                 ((DocProxyNodePtr)proxy)->psvi_status = Pmm_NO_PSVI;
+@@ -550,7 +549,6 @@ PmmNodeToSv( xmlNodePtr node, ProxyNodePtr owner )
+         switch ( node->type ) {
+         case XML_DOCUMENT_NODE:
+         case XML_HTML_DOCUMENT_NODE:
+-        case XML_DOCB_DOCUMENT_NODE:
+             if ( ((xmlDocPtr)node)->encoding != NULL ) {
+                 SetPmmENCODING(dfProxy, (int)xmlParseCharEncoding( (const char*)((xmlDocPtr)node)->encoding ));
+             }
+-- 
+2.14.2
+

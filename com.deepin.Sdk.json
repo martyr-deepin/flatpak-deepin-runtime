@@ -627,19 +627,159 @@
       ]
     },
     {
+      "name": "perl-5.22",
+      "build-options": {
+        "strip": false,
+        "no-debuginfo": true
+      },
+      "sources": [
+        {
+          "type": "archive",
+          "url": "http://www.cpan.org/src/5.0/perl-5.22.1.tar.gz",
+          "sha256": "2b475d0849d54c4250e9cba4241b7b7291cffb45dfd083b677ca7b5d38118f27"
+        },
+        {
+          "type": "script",
+          "commands": [
+            "./configure.gnu $@"
+          ],
+          "dest-filename": "configure"
+        }
+      ]
+    },
+    {
+      "name": "libxml-perl",
+      "buildsystem": "simple",
+      "build-options": {
+        "no-debuginfo": true
+      },
+      "build-commands": [
+        "perl Makefile.PL",
+        "make",
+        "make install"
+      ],
+      "sources": [
+        {
+          "type": "archive",
+          "url": "http://www.cpan.org/authors/id/S/SH/SHLOMIF/XML-LibXML-2.0129.tar.gz",
+          "sha256": "5ca0269ba06800c84061a7f3333c85fab5584d69cd7b4e0641963da7fd36b366"
+        },
+        {
+          "type": "patch",
+          "path": "patch/libxml2/0001-disable-DOCB-node.patch"
+        }
+      ],
+      "modules": [
+        {
+          "name": "libxml2",
+          "config-opts": [
+            "--without-docbook"
+          ],
+          "sources": [
+            {
+              "type": "git",
+              "url": "https://git.gnome.org/browse/libxml2",
+              "branch": "v2.9.6"
+            },
+            {
+              "type": "patch",
+              "path": "patch/libxml2/0001-avoid-devhelp-doc-install.patch"
+            }
+          ]
+        },
+        {
+          "name": "libconfig-tiny-perl",
+          "buildsystem": "simple",
+          "build-commands": [
+            "perl Makefile.PL",
+            "make",
+            "make install"
+          ],
+          "sources": [
+            {
+              "type": "git",
+              "url": "https://github.com/ronsavage/Config-Tiny.git",
+              "branch": "master"
+            }
+          ]
+        },
+        {
+          "name": "libxml-namespacesupport-perl",
+          "buildsystem": "simple",
+          "build-commands": [
+            "perl Makefile.PL",
+            "make",
+            "make install"
+          ],
+          "sources": [
+            {
+              "type": "archive",
+              "url": "http://www.cpan.org/authors/id/P/PE/PERIGRIN/XML-NamespaceSupport-1.12.tar.gz",
+              "sha256": "47e995859f8dd0413aa3f22d350c4a62da652e854267aa0586ae544ae2bae5ef"
+            }
+          ]
+        },
+        {
+          "name": "libxml-sax-base-perl",
+          "buildsystem": "simple",
+          "build-commands": [
+            "perl Makefile.PL",
+            "make",
+            "make install"
+          ],
+          "sources": [
+            {
+              "type": "archive",
+              "url": "http://www.cpan.org/authors/id/G/GR/GRANTM/XML-SAX-Base-1.09.tar.gz",
+              "sha256": "66cb355ba4ef47c10ca738bd35999723644386ac853abbeb5132841f5e8a2ad0"
+            }
+          ]
+        },
+        {
+          "name": "perl-extutils-typemap",
+          "buildsystem": "simple",
+          "build-commands": [
+            "perl Makefile.PL",
+            "make",
+            "make install"
+          ],
+          "sources": [
+            {
+              "type": "archive",
+              "url": "http://search.cpan.org/CPAN/authors/id/S/SM/SMUELLER/ExtUtils-Typemap-1.00.tar.gz",
+              "sha256": "b1b015772dbb068b93a0f6ffa02f5d94822365e6018ac5ed2bc53ca669071fc7"
+            }
+          ]
+        },
+        {
+          "name": "libperl-xml-sax",
+          "buildsystem": "simple",
+          "build-commands": [
+            "perl Makefile.PL",
+            "make",
+            "make install"
+          ],
+          "sources": [
+            {
+              "type": "archive",
+              "url": "http://www.cpan.org/authors/id/G/GR/GRANTM/XML-SAX-0.99.tar.gz",
+              "sha256": "32b04b8e36b6cc4cfc486de2d859d87af5386dd930f2383c49347050d6f5ad84"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "name": "deepin-gettext-tools",
+      "buildsystem": "simple",
+      "build-commands": [
+        "make install"
+      ],
       "sources": [
         {
           "type": "git",
           "url": "https://github.com/linuxdeepin/deepin-gettext-tools.git",
           "branch": "master"
-        },
-        {
-          "type": "script",
-          "commands": [
-            "true"
-          ],
-          "dest-filename": "configure"
         }
       ]
     },
