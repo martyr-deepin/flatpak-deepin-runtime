@@ -1,0 +1,25 @@
+From 84925c669d53d8515596f61d209084bb200109c5 Mon Sep 17 00:00:00 2001
+From: Iceyer <me@iceyer.net>
+Date: Tue, 24 Oct 2017 13:41:08 +0800
+Subject: [PATCH] fix: setCursor args changed
+
+---
+ platformplugin/dplatformintegration.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/platformplugin/dplatformintegration.cpp b/platformplugin/dplatformintegration.cpp
+index caa36c4..e841713 100644
+--- a/platformplugin/dplatformintegration.cpp
++++ b/platformplugin/dplatformintegration.cpp
+@@ -543,7 +543,7 @@ static void overrideChangeCursor(QPlatformCursor *cursorHandle, QCursor * cursor
+             it = xcb_cursor->m_cursorHash.insert(key, overrideCreateFontCursor(xcb_cursor, cursor, widget));
+         }
+         c = it.value();
+-        w->setCursor(c);
++        w->setCursor(c, false);
+     }
+ 
+     VtableHook::callOriginalFun(cursorHandle, &QPlatformCursor::changeCursor, cursor, widget);
+-- 
+2.13.3
+

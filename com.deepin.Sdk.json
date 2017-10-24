@@ -22,6 +22,7 @@
     "org.freedesktop.Sdk.Extension"
   ],
   "finish-args": [
+    "--env=QT_QPA_PLATFORMTHEME=deepin",
     "--env=GI_TYPELIB_PATH=/app/lib/girepository-1.0",
     "--env=GST_PLUGIN_SYSTEM_PATH=/app/lib/gstreamer-1.0:/usr/lib/extensions/gstreamer-1.0:/usr/lib/gstreamer-1.0",
     "--env=XDG_DATA_DIRS=/app/share:/usr/share:/usr/share/runtime/share",
@@ -856,11 +857,15 @@
         {
           "type": "git",
           "url": "https://cr.deepin.io/qt5integration",
-          "branch": "e9980bf9199d3a8493d9ee924c2e9e2e81c70ebf"
+          "branch": "75f877d46a51aa4e72062584e1dbdb6cc961408a"
         },
         {
           "type": "patch",
-          "path": "patch/0001-use-system-qt5-headers.patch"
+          "path": "patch/qt5integration/0001-use-system-qt5-headers.patch"
+        },
+        {
+          "type": "patch",
+          "path": "patch/qt5integration/0001-fix-setCursor-args-changed.patch"
         },
         {
           "type": "script",
