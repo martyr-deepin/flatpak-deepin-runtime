@@ -880,6 +880,31 @@
       ]
     },
     {
+      "name": "qt5-translations",
+      "cleanup-platform": [
+        "/bin",
+        "/mkspecs"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "git://code.qt.io/qt/qttranslations.git",
+          "branch": "v5.9.2"
+        },
+        {
+          "type": "patch",
+          "path": "patch/qttranslations/add-qtbase-zh-cn.patch"
+        },
+        {
+          "type": "script",
+          "commands": [
+            "qmake"
+          ],
+          "dest-filename": "configure"
+        }
+      ]
+    },
+    {
       "name": "os-release",
       "post-install": [
         "mkdir -p /usr/share/runtime/lib/plugins/"
