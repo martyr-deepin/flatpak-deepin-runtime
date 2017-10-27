@@ -1,0 +1,46 @@
+From da664143901a705c971ce5e8132de825897dc7e4 Mon Sep 17 00:00:00 2001
+From: Iceyer <me@iceyer.net>
+Date: Fri, 27 Oct 2017 13:29:16 +0800
+Subject: [PATCH] feat: add FLATPAK_APPID
+
+Change-Id: I0b9fb8b3a4c936e1ede42438a249e16d779d7fa9
+---
+ src/plugins/platforms/xcb/qxcbwindow.cpp | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
+
+diff --git a/src/plugins/platforms/xcb/qxcbwindow.cpp b/src/plugins/platforms/xcb/qxcbwindow.cpp
+index 4acc827bf6..66ca21c58c 100644
+--- a/src/plugins/platforms/xcb/qxcbwindow.cpp
++++ b/src/plugins/platforms/xcb/qxcbwindow.cpp
+@@ -537,6 +537,28 @@ void QXcbWindow::create()
+                                    atom(QXcbAtom::_NET_WM_PID), XCB_ATOM_CARDINAL, 32,
+                                    1, &pid));
+ 
++    QByteArray flatpakAppID = qgetenv("FLATPAK_APPID");
++    if (!flatpakAppID.isEmpty()) {
++        const QByteArray name = QByteArrayLiteral("FLATPAK_APPID");
++
++        xcb_intern_atom_cookie_t cookie = xcb_intern_atom(xcb_connection(),
++                                                          false,
++                                                          static_cast<uint16_t>(name.size()),
++                                                          name.constData());
++        xcb_intern_atom_reply_t *reply = xcb_intern_atom_reply(xcb_connection(), cookie, 0);
++        xcb_atom_t atom = reply->atom;
++        free(reply);
++
++        xcb_change_property(xcb_connection(),
++                            XCB_PROP_MODE_REPLACE,
++                            m_window,
++                            atom,
++                            XCB_ATOM_STRING,
++                            8,
++                            static_cast<uint32_t>(flatpakAppID.size()),
++                            flatpakAppID.constData());
++    }
++
+     xcb_wm_hints_t hints;
+     memset(&hints, 0, sizeof(hints));
+     xcb_wm_hints_set_normal(&hints);
+-- 
+2.13.3
+

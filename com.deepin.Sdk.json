@@ -145,6 +145,10 @@
           "path": "patch/hidpi/0008-load-qss-svg-by-scale.patch"
         },
         {
+          "type": "patch",
+          "path": "patch/qt/0001-feat-add-FLATPAK_APPID.patch"
+        },
+        {
           "type": "shell",
           "commands": [
             "mv configure configure.qt"
@@ -860,15 +864,11 @@
         {
           "type": "git",
           "url": "https://cr.deepin.io/qt5integration",
-          "branch": "75f877d46a51aa4e72062584e1dbdb6cc961408a"
+          "branch": "master"
         },
         {
           "type": "patch",
           "path": "patch/qt5integration/0001-use-system-qt5-headers.patch"
-        },
-        {
-          "type": "patch",
-          "path": "patch/qt5integration/0001-fix-setCursor-args-changed.patch"
         },
         {
           "type": "script",
