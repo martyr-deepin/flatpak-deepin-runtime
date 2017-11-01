@@ -871,6 +871,10 @@
           "path": "patch/qt5integration/0001-use-system-qt5-headers.patch"
         },
         {
+          "type": "patch",
+          "path": "patch/qt5integration/0001-patch-fix-config-path.patch"
+        },
+        {
           "type": "script",
           "commands": [
             "qmake"

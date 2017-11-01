@@ -1,0 +1,31 @@
+From 42783dc0e018baacc46a8977fb035828d2b53661 Mon Sep 17 00:00:00 2001
+From: Iceyer <me@iceyer.net>
+Date: Wed, 1 Nov 2017 10:00:45 +0800
+Subject: [PATCH] patch: fix config path
+
+---
+ platformthemeplugin/qdeepintheme.cpp | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/platformthemeplugin/qdeepintheme.cpp b/platformthemeplugin/qdeepintheme.cpp
+index 3212745..a5b3786 100644
+--- a/platformthemeplugin/qdeepintheme.cpp
++++ b/platformthemeplugin/qdeepintheme.cpp
+@@ -224,7 +224,14 @@ const QFont *QDeepinTheme::font(QPlatformTheme::Font type) const
+ DThemeSettings *QDeepinTheme::settings() const
+ {
+     if (!m_settings) {
++        auto old = qgetenv("XDG_CONFIG_HOME");
++        qDebug() << "save old XDG_CONFIG_HOME:" << old;
++        QByteArray dThemeConfigFile = qgetenv("HOME") + "/.config";
++        qputenv("XDG_CONFIG_HOME", dThemeConfigFile);
++        qDebug() << "set XDG_CONFIG_HOME" << dThemeConfigFile;
+         m_settings = new DThemeSettings();
++        qputenv("XDG_CONFIG_HOME", old);
++        qDebug() << "set XDG_CONFIG_HOME" << old;
+ 
+         qApp->setProperty("_d_theme_settings_object", (quintptr)m_settings);
+ 
+-- 
+2.13.3
+
