@@ -1,0 +1,67 @@
+From acccb462d0bb8fbe87b2d84c75b8d079132e1a4f Mon Sep 17 00:00:00 2001
+From: Iceyer <me@iceyer.net>
+Date: Thu, 2 Nov 2017 09:56:09 +0800
+Subject: [PATCH] fix: read "application.name" from FLATPAK_APPID
+
+---
+ src/pulsecore/proplist-util.c | 32 ++++++++++++++++++++++++++++----
+ 1 file changed, 28 insertions(+), 4 deletions(-)
+
+diff --git a/src/pulsecore/proplist-util.c b/src/pulsecore/proplist-util.c
+index baf683da..b6356e70 100644
+--- a/src/pulsecore/proplist-util.c
++++ b/src/pulsecore/proplist-util.c
+@@ -58,6 +58,27 @@ static Display *_gdk_display PA_GCC_WEAKREF(gdk_display);
+ 
+ #include "proplist-util.h"
+ 
++static char *flatpak_get_application_name() {
++    const char *flatpak_ref = NULL;
++    if ((flatpak_ref = getenv("FLATPAK_APPID"))) {
++        int count = 0;
++        const char *state = NULL;
++        char *appid = NULL;
++        while (appid = pa_split(flatpak_ref, "/", &state)) {
++            if (1 == count) {
++                break;
++            }
++            ++count;
++            pa_xfree(appid);
++        }
++
++        if (appid) {
++            return appid;
++        }
++    }
++    return NULL;
++}
++
+ static void add_glib_properties(pa_proplist *p) {
+ 
+ #if defined(HAVE_GLIB) && defined(PA_GCC_WEAKREF)
+@@ -79,15 +100,18 @@ static void add_gtk_properties(pa_proplist *p) {
+ 
+ #if defined(HAVE_GTK) && defined(PA_GCC_WEAKREF)
+ 
+-    if (!pa_proplist_contains(p, PA_PROP_APPLICATION_ICON_NAME))
+-        if (_gtk_window_get_default_icon_name) {
+-            const gchar *t;
+-
++    if (!pa_proplist_contains(p, PA_PROP_APPLICATION_ICON_NAME)) {
++        const gchar *t = NULL;
++        if (t = flatpak_get_application_name()) {
++            pa_proplist_sets(p, PA_PROP_APPLICATION_ICON_NAME, t);
++            pa_xfree(t);
++        } else if (_gtk_window_get_default_icon_name) {
+             /* We ignore the tiny race condition here. */
+ 
+             if ((t = _gtk_window_get_default_icon_name()))
+                 pa_proplist_sets(p, PA_PROP_APPLICATION_ICON_NAME, t);
+         }
++    }
+ 
+     if (!pa_proplist_contains(p, PA_PROP_WINDOW_X11_DISPLAY))
+         if (&_gdk_display && _gdk_display) {
+-- 
+2.13.3
+

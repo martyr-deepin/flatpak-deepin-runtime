@@ -635,6 +635,43 @@
       ]
     },
     {
+      "name": "pulseaudio",
+      "config-opts": [
+        "--disable-static",
+        "--disable-rpath",
+        "--with-system-user=pulse",
+        "--with-system-group=pulse",
+        "--with-access-group=pulse-access",
+        "--disable-oss-output",
+        "--disable-jack",
+        "--disable-lirc",
+        "--disable-bluez4",
+        "--disable-bluez5",
+        "--disable-systemd"
+      ],
+      "cleanup": [
+        "/share/pulseaudio",
+        "/bin/pulseaudio",
+        "/bin/start-pulseaudio-x11",
+        "/bin/pasuspender",
+        "/lib/pulse-*/modules",
+        "/etc/dbus-1/system.d",
+        "/etc/pulse/daemon.conf",
+        "/etc/pulse/*.pa"
+      ],
+      "sources": [
+        {
+          "type": "archive",
+          "url": "http://www.freedesktop.org/software/pulseaudio/releases/pulseaudio-10.0.tar.xz",
+          "sha256": "a3186824de9f0d2095ded5d0d0db0405dc73133983c2fbb37291547e37462f57"
+        },
+        {
+          "type": "patch",
+          "path": "patch/pulseaudio/0001-fix-read-application.name-from-FLATPAK_APPID.patch"
+        }
+      ]
+    },
+    {
       "name": "perl-5.22",
       "build-options": {
         "strip": false,
