@@ -4,13 +4,21 @@ ARGS="--user"
 ARCH?=$(shell flatpak --default-arch)
 BUILDER_OPTIONS = --rebuild-on-sdk-change --require-changes --ccache --force-clean
 
-all: $(REPO)/config $(foreach file, $(wildcard *.json), $(subst .json,.app,$(file)))
+all: sedtext $(REPO)/config $(foreach file, $(wildcard *.json), $(subst .json,.app,$(file)))
 
 %.app: %.json
 	flatpak-builder $(BUILDER_OPTIONS) \
 		--arch=$(ARCH) \
 		--repo=$(REPO) \
 		--subject="build of com.deepin.Sdk, `date`" ${EXPORT_ARGS} $(TMP) $<
+
+
+sedtext:
+	sed -i 's/BUILDVERWIDGET/master/g' com.deepin.Sdk.json
+	sed -i 's/BUILDVERCORE/master/g' com.deepin.Sdk.json
+	sed -i 's/BUILDVERWM/master/g' com.deepin.Sdk.json
+	sed -i 's/BUILDVERGETTEXT/master/g' com.deepin.Sdk.json
+	sed -i 's/BUILDVERTHEME/master/g' com.deepin.Sdk.json
 
 export:
 	flatpak build-update-repo $(REPO) ${EXPORT_ARGS}
