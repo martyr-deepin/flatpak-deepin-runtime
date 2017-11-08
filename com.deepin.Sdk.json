@@ -824,7 +824,7 @@
         {
           "type": "git",
           "url": "https://github.com/linuxdeepin/deepin-gettext-tools.git",
-          "branch": "BUILDVERGETTEXT"
+          "branch": "master"
         }
       ]
     },
@@ -838,7 +838,7 @@
         {
           "type": "git",
           "url": "https://github.com/linuxdeepin/dtkcore.git",
-          "branch": "BUILDVERCORE"
+          "branch": "master"
         },
         {
           "type": "script",
@@ -859,7 +859,7 @@
         {
           "type": "git",
           "url": "https://github.com/linuxdeepin/dtkwidget.git",
-          "branch": "BUILDVERWIDGET"
+          "branch": "master"
         },
         {
           "type": "script",
@@ -880,7 +880,7 @@
         {
           "type": "git",
           "url": "https://github.com/linuxdeepin/dtkwm.git",
-          "branch": "BUILDVERWM"
+          "branch": "master"
         },
         {
           "type": "script",
@@ -901,7 +901,7 @@
         {
           "type": "git",
           "url": "https://cr.deepin.io/qt5integration",
-          "branch": "BUILDVERTHEME"
+          "branch": "master"
         },
         {
           "type": "patch",
