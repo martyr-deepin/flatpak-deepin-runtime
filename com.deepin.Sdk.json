@@ -598,39 +598,21 @@
     },
     {
       "name": "fontconfig",
+      "config-opts": [
+        "--disable-static"
+      ],
+      "post-install": [
+        "install -m 0644 -p -T fontconfig-flatpak.conf /etc/fonts/conf.d/50-flatpak.conf"
+      ],
       "sources": [
         {
-          "type": "git",
-          "url": "git://people.freedesktop.org/~tagoh/fontconfig",
-          "branch": "master"
+          "type": "archive",
+          "path": "patch/fontconfig/fontconfig.tar.gz",
+          "sha256": "45f6337b25c100858d3a10cad21125f9bd8b2ea4a9911c06fed19d5b04aa0a70"
         },
         {
-          "type": "patch",
-          "path": "patch/fontconfig/0001-Use-uuid-based-cache-filename-if-uuid-is-assigned-to.patch"
-        },
-        {
-          "type": "patch",
-          "path": "patch/fontconfig/0002-Add-new-API-to-find-out-a-font-from-current-search-p.patch"
-        },
-        {
-          "type": "patch",
-          "path": "patch/fontconfig/0003-Replace-the-font-path-in-FcPattern-to-what-it-is-act.patch"
-        },
-        {
-          "type": "patch",
-          "path": "patch/fontconfig/0004-Replace-the-original-path-to-the-new-one.patch"
-        },
-        {
-          "type": "patch",
-          "path": "patch/fontconfig/0005-Replace-the-path-of-subdirs-in-caches-as-well.patch"
-        },
-        {
-          "type": "patch",
-          "path": "patch/fontconfig/0006-Don-t-call-FcStat-when-the-alias-has-already-been-ad.patch"
-        },
-        {
-          "type": "patch",
-          "path": "patch/fontconfig/0007-Destroy-the-alias-and-UUID-tables-when-all-of-caches.patch"
+          "type": "file",
+          "path": "patch/fontconfig/fontconfig-flatpak.conf"
         }
       ]
     },
