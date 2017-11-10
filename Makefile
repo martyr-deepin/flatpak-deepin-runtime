@@ -13,12 +13,12 @@ all: settex $(REPO)/config $(foreach file, $(wildcard *.json), $(subst .json,.ap
 		--subject="build of com.deepin.Sdk, `date`" ${EXPORT_ARGS} $(TMP) $<
 
 settex:
-	set -i 's/BUILDVERGETTEXT/master/g' com.deepin.Sdk.json
-	set -i 's/BUILDVERCORE/master/g' com.deepin.Sdk.json
-	set -i 's/BUILDVERWIDGET/master/g' com.deepin.Sdk.json
-	set -i 's/BUILDVERWM/master/g' com.deepin.Sdk.json
-	set -i 's/BUILDVERQT5INTE/master/g' com.deepin.Sdk.json
-	set -i 's/BUILDVERQT5DXCB/master/g' com.deepin.Sdk.json
+	sed -i 's/BUILDVERGETTEXT/master/g' com.deepin.Sdk.json
+	sed -i 's/BUILDVERCORE/master/g' com.deepin.Sdk.json
+	sed -i 's/BUILDVERWIDGET/master/g' com.deepin.Sdk.json
+	sed -i 's/BUILDVERWM/master/g' com.deepin.Sdk.json
+	sed -i 's/BUILDVERQT5INTE/master/g' com.deepin.Sdk.json
+	sed -i 's/BUILDVERQT5DXCB/master/g' com.deepin.Sdk.json
 export:
 	flatpak build-update-repo $(REPO) ${EXPORT_ARGS}
 
