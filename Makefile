@@ -12,7 +12,13 @@ all: $(REPO)/config $(foreach file, $(wildcard *.json), $(subst .json,.app,$(fil
 		--repo=$(REPO) \
 		--subject="build of com.deepin.Sdk, `date`" ${EXPORT_ARGS} $(TMP) $<
 
-
+settex:
+	set -i 's/BUILDVERGETTEXT/master' com.deepin.Sdk.json
+	set -i 's/BUILDVERCORE/master' com.deepin.Sdk.json
+	set -i 's/BUILDVERWIDGET/master' com.deepin.Sdk.json
+	set -i 's/BUILDVERWM/master' com.deepin.Sdk.json
+	set -i 's/BUILDVERQT5INTE/master' com.deepin.Sdk.json
+	set -i 's/BUILDVERQT5DXCB/master' com.deepin.Sdk.json
 export:
 	flatpak build-update-repo $(REPO) ${EXPORT_ARGS}
 
