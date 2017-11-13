@@ -4,7 +4,7 @@ ARGS="--user"
 ARCH?=$(shell flatpak --default-arch)
 BUILDER_OPTIONS = --rebuild-on-sdk-change --require-changes --ccache --force-clean
 
-all: $(REPO)/config $(foreach file, $(wildcard *.yaml), $(subst .yaml,.app,$(file)))
+all: cleanjson $(REPO)/config $(foreach file, $(wildcard *.yaml), $(subst .yaml,.app,$(file)))
 
 %.app: com.deepin.Sdk.json
 	flatpak-builder $(BUILDER_OPTIONS) \
@@ -39,6 +39,9 @@ deps:
 
 check:
 	json-glib-validate *.json
+
+cleanjson:
+	rm com.deepin.Sdk.json
 
 clean:
 	echo "clean finish"
