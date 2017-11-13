@@ -4,7 +4,7 @@ ARGS="--user"
 ARCH?=$(shell flatpak --default-arch)
 BUILDER_OPTIONS = --rebuild-on-sdk-change --require-changes --ccache --force-clean
 
-all: settex $(REPO)/config $(foreach file, $(wildcard *.json), $(subst .json,.app,$(file)))
+all: $(REPO)/config $(foreach file, $(wildcard *.yaml), $(subst .yaml,.app,$(file)))
 
 %.app: com.deepin.Sdk.json
 	flatpak-builder $(BUILDER_OPTIONS) \
@@ -12,14 +12,15 @@ all: settex $(REPO)/config $(foreach file, $(wildcard *.json), $(subst .json,.ap
 		--repo=$(REPO) \
 		--subject="build of com.deepin.Sdk, `date`" ${EXPORT_ARGS} $(TMP) $<
 
-settex:
-	cp com.deepin.Sdk.json.in com.deepin.Sdk.json
+com.deepin.Sdk.json:
+	python json2yaml.py com.deepin.Sdk.yaml > com.deepin.Sdk.json
 	sed -i 's/BUILDVERGETTEXT/master/g' com.deepin.Sdk.json
 	sed -i 's/BUILDVERCORE/master/g' com.deepin.Sdk.json
 	sed -i 's/BUILDVERWIDGET/master/g' com.deepin.Sdk.json
 	sed -i 's/BUILDVERWM/master/g' com.deepin.Sdk.json
 	sed -i 's/BUILDVERQT5INTE/master/g' com.deepin.Sdk.json
 	sed -i 's/BUILDVERQT5DXCB/master/g' com.deepin.Sdk.json
+
 export:
 	flatpak build-update-repo $(REPO) ${EXPORT_ARGS}
 
