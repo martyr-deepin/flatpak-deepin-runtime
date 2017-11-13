@@ -39,6 +39,8 @@
     "--talk-name=org.freedesktop.Notifications",
     "--talk-name=org.freedesktop.FileManager1",
     "--talk-name=com.deepin.filemanager.filedialog",
+    "--talk-name=com.deepin.dde.WarningDialog",
+    "--talk-name=com.deepin.dman",
     "--sdk=com.deepin.Sdk//master",
     "--runtime=com.deepin.Platform//master"
   ],
