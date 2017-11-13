@@ -949,6 +949,22 @@
       ]
     },
     {
+      "name": "dman",
+      "buildsystem": "simple",
+      "build-options": {
+        "no-debuginfo": true
+      },
+      "build-commands": [
+        "install -m 0755 -p -T dman.py /usr/bin/dman"
+      ],
+      "sources": [
+        {
+          "type": "file",
+          "path": "patch/dman/dman.py"
+        }
+      ]
+    },
+    {
       "name": "os-release",
       "post-install": [
         "mkdir -p /usr/share/runtime/lib/plugins/"

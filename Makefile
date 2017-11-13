@@ -6,13 +6,14 @@ BUILDER_OPTIONS = --rebuild-on-sdk-change --require-changes --ccache --force-cle
 
 all: settex $(REPO)/config $(foreach file, $(wildcard *.json), $(subst .json,.app,$(file)))
 
-%.app: %.json
+%.app: com.deepin.Sdk.json
 	flatpak-builder $(BUILDER_OPTIONS) \
 		--arch=$(ARCH) \
 		--repo=$(REPO) \
 		--subject="build of com.deepin.Sdk, `date`" ${EXPORT_ARGS} $(TMP) $<
 
 settex:
+	cp com.deepin.Sdk.json.in com.deepin.Sdk.json
 	sed -i 's/BUILDVERGETTEXT/master/g' com.deepin.Sdk.json
 	sed -i 's/BUILDVERCORE/master/g' com.deepin.Sdk.json
 	sed -i 's/BUILDVERWIDGET/master/g' com.deepin.Sdk.json
