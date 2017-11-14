@@ -63,6 +63,29 @@ inherit-extensions:
   - org.freedesktop.Platform.VAAPI.Intel
   - org.freedesktop.Sdk.Extension
 modules:
+  - build-options:
+      no-debuginfo: true
+      strip: false
+    cleanup-platform:
+      - /bin/cups-config
+    config-opts:
+      - '--disable-static'
+      - '--enable-debug'
+      - '--with-components=all'
+      - '--with-dbusdir=/etc/dbus-1'
+      - '--enable-avahi'
+      - '--disable-systemd'
+      - '--enable-threads'
+      - '--enable-gnutls'
+      - '--libdir=/usr/lib'
+      - localedir=/usr/share/locale
+    name: cups
+    post-install:
+      - chmod u+w /usr/bin/ipptool /usr/lib/libcups.*
+    sources:
+      - sha256: ba0238418442b8d84e09a865d0df6a728a20399826c5b466b14b1e9ab8c6d2c9
+        type: archive
+        url: 'http://www.cups.org/software/2.1.0/cups-2.1.0-source.tar.bz2'
   - cleanup-platform:
       - /bin
       - /mkspecs
@@ -93,7 +116,6 @@ modules:
       - '-no-directfb'
       - '-no-linuxfb'
       - '-no-kms'
-      - '-no-cups'
       - '-system-proxies'
       - '-gtk'
       - '-archdatadir'
@@ -258,6 +280,20 @@ modules:
       - branch: v5.9.2
         type: git
         url: 'git://code.qt.io/qt/qtimageformats.git'
+      - commands:
+          - qmake
+        dest-filename: configure
+        type: script
+  - cleanup-platform:
+      - /bin
+      - /mkspecs
+    name: qt5-translations
+    sources:
+      - branch: v5.9.2
+        type: git
+        url: 'git://code.qt.io/qt/qttranslations.git'
+      - path: patch/qttranslations/add-qtbase-zh-cn.patch
+        type: patch
       - commands:
           - qmake
         dest-filename: configure
@@ -584,20 +620,6 @@ modules:
         type: git
         url: 'https://cr.deepin.io/qt5dxcb-plugin'
       - path: patch/qt5integration/0001-use-system-qt5-headers.patch
-        type: patch
-      - commands:
-          - qmake
-        dest-filename: configure
-        type: script
-  - cleanup-platform:
-      - /bin
-      - /mkspecs
-    name: qt5-translations
-    sources:
-      - branch: v5.9.2
-        type: git
-        url: 'git://code.qt.io/qt/qttranslations.git'
-      - path: patch/qttranslations/add-qtbase-zh-cn.patch
         type: patch
       - commands:
           - qmake
