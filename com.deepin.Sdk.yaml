@@ -579,10 +579,8 @@ modules:
       - branch: BUILDVERWIDGET
         type: git
         url: 'https://github.com/linuxdeepin/dtkwidget.git'
-      - type: patch
-        path: patch/0001-feat-add-flatpak-check-dir.patch
       - commands:
-          - qmake DEFINES+=DTK_DBUS_SINGLEINSTANCE
+          - qmake DEFINES+=DTK_DBUS_SINGLEINSTANCE DEFINES+=DTK_DMAN_PORTAL
         dest-filename: configure
         type: script
   - cleanup-platform:
