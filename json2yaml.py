@@ -64,10 +64,16 @@ Dumper.add_representer(unicode, SafeRepresenter.represent_unicode)
 
 if __name__ == '__main__':
     with open(sys.argv[1]) as f:
-        yaml_dict = yaml.load(f, Loader=Loader)
-        if len(sys.argv) == 3:
-            print("Save new yaml to %s" % sys.argv[2])
-            with open(sys.argv[2], 'w') as f:
-                yaml.dump(yaml_dict, f, default_flow_style=False)
+        if (sys.argv[1].endswith('yaml')):
+            yaml_dict = yaml.load(f, Loader=Loader)
+            if len(sys.argv) == 3:
+                print("Save new yaml to %s" % sys.argv[2])
+                with open(sys.argv[2], 'w') as f:
+                    yaml.dump(yaml_dict, f, default_flow_style=False)
+            else:
+                print(json.dumps(yaml_dict, indent=4))
         else:
-            print(json.dumps(yaml_dict, indent=4))
+            json_dict = json.load(f)
+            yaml_dict = yaml.load(yaml.dump(json_dict), Loader=Loader)
+            print(yaml.dump(yaml_dict, default_flow_style=False))
+
