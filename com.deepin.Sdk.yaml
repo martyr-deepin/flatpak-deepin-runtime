@@ -63,8 +63,6 @@ modules:
           config-opts:
             - '--arch=x86'
     cleanup:
-      - /include
-      - /lib/pkgconfig
       - /share/ffmpeg/examples
     config-opts:
       - '--enable-shared'
