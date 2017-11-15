@@ -680,6 +680,15 @@ modules:
     build-commands:
       - install -m 0755 -p -T dman.py /usr/bin/dman
     buildsystem: simple
+  - name: dpreload
+    sources:
+      - type: archive
+        path: src/dpreload.tar.gz
+        sha256: 554db363ef28548fc17cb540581b9306b1f4e5f5f935e050f4d44b80e0892fd2
+      - type: script
+        commands:
+          - qmake PREFIX=/usr -r
+        dest-filename: configure
   - name: os-release
     sources:
       - type: file
