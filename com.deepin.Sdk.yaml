@@ -49,6 +49,21 @@ modules:
       - localedir=/usr/share/locale
     post-install:
       - chmod u+w /usr/bin/ipptool /usr/lib/libcups.*
+  - name: python-dbus
+    no-autogen: true
+    sources:
+      - type: archive
+        sha256: e2f1d6871f74fba23652e51d10873e54f71adab0525833c19bad9e99b1b2f9cc
+        url: >-
+          https://pypi.python.org/packages/ad/1b/76adc363212c642cabbf9329457a918308c0b9b5d38ce04d541a67255174/dbus-python-1.2.4.tar.gz
+      - type: file
+        path: setuptools-makefile
+        dest-filename: Makefile
+    build-options:
+      env:
+        PYTHON: /usr/bin/python3
+    cleanup:
+      - '*'
   - name: ffmpeg
     sources:
       - type: archive
