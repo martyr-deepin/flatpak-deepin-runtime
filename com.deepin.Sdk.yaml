@@ -49,6 +49,13 @@ modules:
       - localedir=/usr/share/locale
     post-install:
       - chmod u+w /usr/bin/ipptool /usr/lib/libcups.*
+  - name: dbus-glib
+    config-opts:
+      - '--disable-static'
+      - '--disable-gtk-doc'
+    sources:
+      - type: git
+        url: 'git://anongit.freedesktop.org/git/dbus/dbus-glib'
   - name: python-dbus
     no-autogen: true
     sources:

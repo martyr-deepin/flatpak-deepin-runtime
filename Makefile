@@ -7,7 +7,7 @@ BUILDER_OPTIONS = --rebuild-on-sdk-change --require-changes --ccache --force-cle
 all: cleanjson $(REPO)/config $(foreach file, $(wildcard *.yaml), $(subst .yaml,.app,$(file)))
 
 %.app: com.deepin.Sdk.json
-	flatpak-builder $(BUILDER_OPTIONS) \
+	flatpak-builder $(BUILDER_OPTIONS) $${OPTS}\
 		--arch=$(ARCH) \
 		--repo=$(REPO) \
 		--subject="build of com.deepin.Sdk, `date`" ${EXPORT_ARGS} $(TMP) $<
