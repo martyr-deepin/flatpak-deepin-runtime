@@ -41,7 +41,7 @@ check:
 	json-glib-validate *.json
 
 cleanjson:
-	rm com.deepin.Sdk.json
+	rm -f com.deepin.Sdk.json
 
 clean:
 	echo "clean finish"
