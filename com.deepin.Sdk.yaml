@@ -99,38 +99,36 @@ modules:
   - name: gstreamer
     sources:
       - type: archive
-        sha256: d388f492440897f02b01eebb033ca2d41078a3d85c0eddc030cdea5a337a216e
+        sha256: 9fde3f39a2ea984f9e07ce09250285ce91f6e3619d186889f75b5154ecf994ba
         url: >-
-          https://gstreamer.freedesktop.org/src/gstreamer/gstreamer-1.12.3.tar.xz
-      - type: patch
-        path: patch/gst/0001-fix-patch-binary-version.patch
+          https://gstreamer.freedesktop.org/src/gstreamer/gstreamer-1.12.2.tar.xz
     config-opts:
       - '--disable-static'
       - '--disable-gtk-doc'
   - name: gst-plugins-base
     sources:
       - type: archive
-        sha256: d3d37b8489d37fa0018973d850bd2067b98af335fef2fa543ee7d40359e3cea5
+        sha256: 5067dce3afe197a9536fea0107c77213fab536dff4a213b07fc60378d5510675
         url: >-
-          https://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-1.12.3.tar.xz
+          https://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-1.12.2.tar.xz
     config-opts:
       - '--disable-static'
       - '--disable-gtk-doc'
   - name: gst-plugins-good
     sources:
       - type: archive
-        sha256: 13e7f479296891fef5a686438f20ba7d534680becf2269ecc5ee24aa83b45f03
+        sha256: 5591ee7208ab30289a30658a82b76bf87169c927572d9b794f3a41ed48e1ee96
         url: >-
-          https://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-1.12.3.tar.xz
+          https://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-1.12.2.tar.xz
     config-opts:
       - '--disable-static'
       - '--disable-gtk-doc'
   - name: gst-libav
     sources:
       - type: archive
-        sha256: 015ef8cab6f7fb87c8fb42642486423eff3b6e6a6bccdcd6a189f436a3619650
+        sha256: 5bb735b9bb218b652ae4071ea6f6be8eaae55e9d3233aec2f36b882a27542db3
         url: >-
-          https://gstreamer.freedesktop.org/src/gst-libav/gst-libav-1.12.3.tar.xz
+          https://gstreamer.freedesktop.org/src/gst-libav/gst-libav-1.12.2.tar.xz
     cleanup:
       - '*.la'
       - /share/gtk-doc
@@ -139,9 +137,9 @@ modules:
   - name: gst-plugins-bad
     sources:
       - type: archive
-        sha256: 36d059761852bed0f1a7fcd3ef64a8aeecab95d2bca53cd6aa0f08054b1cbfec
+        sha256: 9c2c7edde4f59d74eb414e0701c55131f562e5c605a3ce9b091754f106c09e37
         url: >-
-          https://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-1.12.3.tar.xz
+          https://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-1.12.2.tar.xz
     cleanup:
       - '*.la'
       - /share/gtk-doc
@@ -150,9 +148,9 @@ modules:
   - name: gst-plugins-ugly
     sources:
       - type: archive
-        sha256: e88ca584c94ea78eeecbf3af00ef7f134b66bdee7408aa4aa6c547235e060052
+        sha256: 1cc3942bbf3ea87da3e35437d4e014e991b103db22a6174f62a98c89c3f5f466
         url: >-
-          https://gstreamer.freedesktop.org/src/gst-plugins-ugly/gst-plugins-ugly-1.12.3.tar.xz
+          https://gstreamer.freedesktop.org/src/gst-plugins-ugly/gst-plugins-ugly-1.12.2.tar.xz
     cleanup:
       - '*.la'
       - /share/gtk-doc
