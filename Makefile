@@ -14,12 +14,7 @@ all: cleanjson $(REPO)/config $(foreach file, $(wildcard *.yaml), $(subst .yaml,
 
 com.deepin.Sdk.json:
 	python json2yaml.py com.deepin.Sdk.yaml > com.deepin.Sdk.json
-	sed -i 's/BUILDVERGETTEXT/master/g' com.deepin.Sdk.json
-	sed -i 's/BUILDVERCORE/master/g' com.deepin.Sdk.json
-	sed -i 's/BUILDVERWIDGET/master/g' com.deepin.Sdk.json
-	sed -i 's/BUILDVERWM/master/g' com.deepin.Sdk.json
-	sed -i 's/BUILDVERQT5INTE/master/g' com.deepin.Sdk.json
-	sed -i 's/BUILDVERQT5DXCB/master/g' com.deepin.Sdk.json
+	bash update_version.bash
 
 export:
 	flatpak build-update-repo $(REPO) ${EXPORT_ARGS}
