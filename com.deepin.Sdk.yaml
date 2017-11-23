@@ -417,7 +417,7 @@ modules:
   - name: libdframeworkdbus
     sources:
       - type: git
-        branch: master
+        branch: 0.4.2
         url: 'https://cr.deepin.io/dde/dde-qt-dbus-factory'
       - type: script
         commands:
