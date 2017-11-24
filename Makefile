@@ -13,8 +13,8 @@ all: cleanjson $(REPO)/config $(foreach file, $(wildcard *.yaml), $(subst .yaml,
 		--subject="build of com.deepin.Sdk, `date`" ${EXPORT_ARGS} $(TMP) $<
 
 com.deepin.Sdk.json:
-	python json2yaml.py com.deepin.Sdk.yaml > com.deepin.Sdk.json
 	bash update_version.bash
+	python json2yaml.py com.deepin.Sdk.yaml > com.deepin.Sdk.json
 
 export:
 	flatpak build-update-repo $(REPO) ${EXPORT_ARGS}
