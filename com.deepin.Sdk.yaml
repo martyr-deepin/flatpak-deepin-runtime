@@ -71,6 +71,17 @@ modules:
         PYTHON: /usr/bin/python3
     cleanup:
       - '*'
+  - name: libx264
+    sources:
+      - type: git
+        branch: stable
+        commit: aaa9aa83a111ed6f1db253d5afa91c5fc844583f
+        url: 'https://git.videolan.org/git/x264.git'
+    cleanup:
+      - /bin/x264
+    config-opts:
+      - '--enable-pic'
+      - '--enable-shared'
   - name: ffmpeg
     sources:
       - type: archive
@@ -89,6 +100,7 @@ modules:
     config-opts:
       - '--enable-shared'
       - '--enable-gpl'
+      - '--enable-libx264'
       - '--enable-version3'
       - '--enable-avresample'
       - '--enable-swresample'
@@ -96,6 +108,32 @@ modules:
       - '--enable-gnutls'
       - '--disable-doc'
       - '--enable-encoders'
+  - name: opus
+    sources:
+      - type: git
+        branch: v1.2.1
+        url: 'https://github.com/xiph/opus.git'
+  - name: gstreamer-plugins-base
+    sources:
+      - type: archive
+        sha256: 1c401a79bd1e4521c6ef1b66579bddedd9136e164e54792aab4bfcf3485bf9a7
+        url: >-
+          https://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-1.10.5.tar.xz
+    config-opts:
+      - '--enable-experimental'
+      - '--enable-orc'
+  - name: gstreamer-plugins-bad
+    build-options:
+      arch:
+        arm:
+          config-opts:
+            - '--build=arm-unknown-linux-gnueabi'
+        i386:
+          config-opts:
+            - '--build=i586-unknown-linux-gnu'
+    config-opts:
+      - '--enable-experimental'
+      - '--enable-orc'
   - name: gst-libav
     sources:
       - type: archive
