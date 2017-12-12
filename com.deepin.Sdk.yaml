@@ -160,6 +160,12 @@ modules:
         path: patch/hidpi/0008-load-qss-svg-by-scale.patch
       - type: patch
         path: patch/qt/0001-feat-add-FLATPAK_APPID.patch
+      - type: patch
+        path: patch/hidpi/0009-fix_qss_border_cap_style.patch
+      - type: patch
+        path: patch/hidpi/fix_qrasterpaintengine_rect_for_hidpi.patch
+      - type: patch
+        path: patch/hidpi/fix_qregion_scale_for_hidpi.patch
       - type: shell
         commands:
           - mv configure configure.qt
@@ -455,7 +461,7 @@ modules:
   - name: libdframeworkdbus
     sources:
       - type: git
-        branch: 0.4.2
+        branch: BUILDVERDFRAME
         url: 'https://cr.deepin.io/dde/dde-qt-dbus-factory'
       - type: script
         commands:
