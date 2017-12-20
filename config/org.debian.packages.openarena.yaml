@@ -1,0 +1,54 @@
+---
+id: org.debian.packages.openarena
+branch: master
+runtime: net.debian.flatpak.Games.Platform
+sdk: net.debian.flatpak.Games.Sdk
+#var: net.debian.flatpak.Games.Sdk.Var
+command: openarena
+writable-sdk: true
+finish-args:
+  - --filesystem=~/.openarena:create
+  - --share=ipc
+  - --share=network
+  - --socket=pulseaudio
+  - --socket=wayland
+  - --socket=x11
+  - --device=dri
+modules:
+  - name: ioquake3
+    sources:
+      - type: git
+        dest: src
+        path: /home/smcv/src/debian/ioquake3    # TODO: edit me
+        branch: wip/flatpak-app
+      - type: file
+        path: deb-buildapi/configure
+      - type: file
+        path: deb-buildapi/Makefile
+    cleanup:
+      - ioq3ded*
+      - qagame*.so
+  - name: openarena
+    sources:
+      - type: git
+        dest: src
+        path: /home/smcv/src/debian/openarena   # TODO: edit me
+        branch: wip/flatpak-app
+      - type: file
+        path: deb-buildapi/configure
+      - type: file
+        path: deb-buildapi/Makefile
+  - name: openarena-data
+    x-flatdeb-apt-packages:
+      - openarena-088-data
+      - openarena-data
+      - openarena-oacmp1
+    sources:
+      - type: file
+        path: deb-buildapi/configure
+      - type: file
+        path: deb-buildapi/Makefile
+rename-desktop-file: openarena.desktop
+rename-icon: openarena128
+desktop-file-name-prefix: "flatdeb "
+...

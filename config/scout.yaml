@@ -1,0 +1,23 @@
+---
+apt_components:
+  - main
+debootstrap_script: 'precise'
+sources:
+  - apt_uri: 'http://archive.ubuntu.com/ubuntu'
+    apt_suite: 'precise'
+    keyring: 'ubuntu-archive-keyring.gpg'
+    apt_components:
+      - main
+      - universe
+      - restricted
+      - multiverse
+  - apt_uri: 'http://repo.steampowered.com/steamrt'
+    keyring: 'valve-archive-keyring.gpg'
+    apt_components:
+      - main
+  - apt_uri: 'http://repo.steampowered.com/steam'
+    apt_suite: 'precise'
+    keyring: 'valve-steam-keyring.gpg'
+    apt_components:
+      - steam
+...

@@ -1,0 +1,22 @@
+---
+id: org.debian.packages.tmux
+branch: master
+runtime: net.debian.flatpak.Base.Platform
+runtime-version: testing
+sdk: net.debian.flatpak.Base.Sdk
+command: tmux
+writable-sdk: true
+modules:
+  - name: tmux
+    x-flatdeb-apt-packages:
+      - tmux
+    sources:
+      - type: file
+        path: deb-buildapi/configure
+        dest: '.'
+      - type: file
+        path: deb-buildapi/Makefile
+
+finish-args:
+    - --env=LD_LIBRARY_PATH=/app/lib/x86_64-linux-gnu:/app/lib
+...

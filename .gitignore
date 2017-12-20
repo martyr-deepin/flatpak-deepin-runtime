@@ -1,0 +1,5 @@
+.flatpak-builder
+repo
+sdk
+com.deepin.Sdk.json
+.vscode/

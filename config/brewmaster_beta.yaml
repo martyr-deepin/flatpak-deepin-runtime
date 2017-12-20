@@ -1,0 +1,18 @@
+---
+apt_components:
+  - main
+  - contrib
+  - non-free
+debootstrap_script: 'jessie'
+sources:
+  - apt_uri: 'http://repo.steampowered.com/steamos'
+    keyring: 'valve-archive-keyring.gpg'
+  - apt_uri: 'http://deb.debian.org/debian'
+    apt_suite: 'jessie'
+    keyring: 'debian-archive-keyring.gpg'
+  - apt_uri: 'http://repo.steampowered.com/steam'
+    apt_suite: 'precise'
+    keyring: 'valve-steam-keyring.gpg'
+    apt_components:
+      - steam
+...

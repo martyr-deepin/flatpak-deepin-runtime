@@ -1,0 +1,57 @@
+---
+add_packages_multiarch:
+  - libgl1-mesa-dri
+  - libgl1-mesa-glx
+  - libgpg-error0
+  - libjpeg62-turbo
+  - libogg0
+  - libopenal1
+  - libopus0
+  - libopusfile0
+  - libsdl2-2.0-0
+  - libstdc++6
+  - libtxc-dxtn0
+  - libudev1
+  - libvorbis0a
+  - libvorbisfile3
+  - libx11-6
+  - libxinerama1
+  - libxss1
+  - zlib1g
+
+debconf:
+  steam steam/license seen true
+  steam steam/question select I AGREE
+
+add_packages:
+  - debconf
+  - fonts-liberation
+  - steam-launcher:i386
+  - x11-utils
+  - xterm
+  - xz-utils
+  - zenity
+
+platform:
+  null: null
+
+sdk:
+  add_packages:
+    - build-essential
+    - ccache
+    - debhelper
+    - dh-exec
+    - dpkg-dev
+    - libcurl4-gnutls-dev
+    - libgl1-mesa-dev
+    - libjpeg-dev
+    - libnss-extrausers
+    - libogg-dev
+    - libopenal-dev
+    - libopus-dev
+    - libopusfile-dev
+    - libsdl2-dev
+    - libvorbis-dev
+    - libz-dev
+...
+

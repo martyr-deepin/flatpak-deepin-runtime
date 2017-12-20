@@ -1,0 +1,41 @@
+---
+add_packages:
+  # This package list is suspiciously similar to the dependencies of
+  # ioquake3 and openarena. There's a reason for that :-)
+  - libcurl3-gnutls
+  - libgl1-mesa-dri
+  - libgl1-mesa-glx
+  - libjpeg62-turbo
+  - libogg0
+  - libopenal1
+  - libopus0
+  - libopusfile0
+  - libsdl2-2.0-0
+  - libvorbis0a
+  - libvorbisfile3
+  - zlib1g
+  - x11-utils
+
+platform:
+  null: null
+
+sdk:
+  add_packages:
+    - build-essential
+    - ccache
+    - debhelper
+    - dh-exec
+    - dpkg-dev
+    - fakeroot
+    - libcurl4-gnutls-dev
+    - libgl1-mesa-dev
+    - libjpeg-dev
+    - libnss-extrausers
+    - libogg-dev
+    - libopenal-dev
+    - libopus-dev
+    - libopusfile-dev
+    - libsdl2-dev
+    - libvorbis-dev
+    - libz-dev
+...

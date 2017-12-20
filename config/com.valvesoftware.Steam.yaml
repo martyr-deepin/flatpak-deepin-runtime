@@ -1,0 +1,44 @@
+---
+id: com.valvesoftware.Steam
+branch: scout
+runtime: com.valvesoftware.SteamRuntime.Platform
+runtime-version: scout
+sdk: com.valvesoftware.SteamRuntime.Sdk
+command: steam
+tags: proprietary
+modules:
+  - name: steam-launcher
+    x-flatdeb-apt-packages:
+      - steam-launcher
+    sources:
+      - type: file
+        path: deb-buildapi/configure
+        dest: '.'
+      - type: file
+        path: deb-buildapi/Makefile
+
+finish-args:
+  - --allow=multiarch
+  - --device=all
+  - --persist=.local
+  - --persist=.steam
+  - --share=ipc
+  - --share=network
+  - --socket=pulseaudio
+  - --socket=system-bus
+  - --socket=x11
+  - --talk-name=org.freedesktop.NetworkManager
+  - --talk-name=org.gnome.SettingsDaemon
+  - --talk-name=org.kde.StatusNotifierWatcher
+  # FIXME: This should be the runtime's job, but requires a generic way
+  # to detect which flavour of GL driver selection is in use. Maybe one
+  # day glvnd will save us all.
+  - --env=LD_LIBRARY_PATH=/app/lib:/usr/lib/x86_64-linux-gnu/mesa:/usr/lib/i386-linux-gnu/mesa
+
+cleanup-commands:
+  - sed -i -e '2,$s,/usr/,/app/,g' /app/bin/steam
+  - sed -i -e 's,/usr/bin/steam,/app/bin/steam,g' /app/share/applications/*.desktop
+rename-desktop-file: steam.desktop
+rename-icon: steam
+desktop-file-name-prefix: "flatdeb "
+...

@@ -1,0 +1,4 @@
+NAME=Deepin
+VERSION=master (Flatpak runtime)
+VERSION_ID=master
+ID=com.deepin.Platform

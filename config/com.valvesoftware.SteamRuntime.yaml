@@ -1,0 +1,296 @@
+---
+# Based on
+# https://github.com/ValveSoftware/steam-runtime/blob/master/setup_chroot.sh
+#
+# Copyright © 2013-2016 Valve Corporation
+# Copyright © 2017 Collabora Ltd.
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of these scripts and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be included
+# in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+# IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+# CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+# TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+# SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+add_packages_multiarch:
+  - dconf-gsettings-backend
+  - freeglut3
+  - gcc-4.6-base
+  - gtk2-engines
+  - gtk2-engines-murrine
+  - gtk2-engines-pixbuf
+  - libacl1
+  - libasn1-8-heimdal
+  - libasound2
+  - libasound2-plugins
+  - libasyncns0
+  - libatk1.0-0
+  - libattr1
+  - libavahi-client3
+  - libavahi-common3
+  - libavcodec53
+  - libavfilter2
+  - libavformat53
+  - libavutil51
+  - libbz2-1.0
+  - libcairo2
+  - libcanberra0
+  - libcanberra-gtk0
+  - libcanberra-gtk-module
+  - libcap2
+  - libcg
+  - libcggl
+  - libcomerr2
+  - libcurl3
+  - libcups2
+  - libcurl3
+  - libcurl3-gnutls
+  - libdbus-1-3
+  - libdbus-glib-1-2
+  - libdbusmenu-glib4
+  - libdbusmenu-gtk4
+  - libexif12
+  - libexpat1
+  - libffi6
+  - libflac8
+  - libfltk1.1
+  - libfontconfig1
+  - libfreetype6
+  - libgcc1
+  - libgconf-2-4
+  - libgcrypt11
+  - libgdk-pixbuf2.0-0
+  - libglew1.10
+  - libglew1.6
+  - libglib2.0-0
+  - libglu1-mesa
+  - libgmp10
+  - libgnutls26
+  - libgomp1
+  - libgpg-error0
+  - libgssapi3-heimdal
+  - libgssapi-krb5-2
+  - libgstreamer0.10-0
+  - libgstreamer-plugins-base0.10-0
+  - libgtk2.0-0
+  - libgtk2.0-common
+  - libgudev-1.0-0
+  - libhcrypto4-heimdal
+  - libheimbase1-heimdal
+  - libheimntlm0-heimdal
+  - libhx509-5-heimdal
+  - libice6
+  - libidn11
+  - libjack-jackd2-0
+  - libjpeg62
+  - libjpeg-turbo8
+  - libjson0
+  - libk5crypto3
+  - libkeyutils1
+  - libkrb5-26-heimdal
+  - libkrb5-3
+  - libkrb5support0
+  - liblcms2-2
+  - libldap-2.4-2
+  - libltdl7
+  - libmikmod2
+  - libncurses5
+  - libncursesw5
+  - libnotify4
+  - libnspr4
+  - libnss3
+  - libogg0
+  - libopenal1
+  - liborc-0.4-0
+  - libp11-kit0
+  - libpango1.0-0
+  - libpci3
+  - libpcre3
+  - libpcrecpp0
+  - libpixman-1-0
+  - libpng12-0
+  - libpulse0
+  - libroken18-heimdal
+  - librtmp0
+  - libsamplerate0
+  - libsasl2-2
+  - libsdl1.2debian
+  - libsdl2
+  - libsdl2-image
+  - libsdl2-mixer
+  - libsdl2-net
+  - libsdl2-ttf
+  - libsdl-image1.2
+  - libsdl-mixer1.2
+  - libsdl-ttf2.0-0
+  - libselinux1
+  - libsm6
+  - libsndfile1
+  - libspeex1
+  - libspeexdsp1
+  - libsqlite3-0
+  - libssl1.0.0
+  - libstdc++6
+  - libswscale2
+  - libtasn1-3
+  - libtdb1
+  - libtheora0
+  - libtiff4
+  - libtinfo5
+  - libudev0
+  - libusb-1.0-0
+  - libuuid1
+  - libva1
+  - libva-glx1
+  - libva-x11-1
+  - libvdpau1
+  - libvorbis0a
+  - libvorbisenc2
+  - libvorbisfile3
+  - libwind0-heimdal
+  - libwrap0
+  - libx11-6
+  - libx11-data
+  - libx11-xcb1
+  - libxau6
+  - libxaw7
+  - libxcb1
+  - libxcb-composite0
+  - libxcb-damage0
+  - libxcb-doc
+  - libxcb-dpms0
+  - libxcb-dri2-0
+  - libxcb-dri3-0
+  - libxcb-glx0
+  - libxcb-present0
+  - libxcb-randr0
+  - libxcb-record0
+  - libxcb-render0
+  - libxcb-res0
+  - libxcb-screensaver0
+  - libxcb-shape0
+  - libxcb-shm0
+  - libxcb-sync1
+  - libxcb-xevie0
+  - libxcb-xf86dri0
+  - libxcb-xfixes0
+  - libxcb-xinerama0
+  - libxcb-xkb1
+  - libxcb-xprint0
+  - libxcb-xtest0
+  - libxcb-xv0
+  - libxcb-xvmc0
+  - libxcomposite1
+  - libxcursor1
+  - libxdamage1
+  - libxdmcp6
+  - libxext6
+  - libxfixes3
+  - libxft2
+  - libxi6
+  - libxinerama1
+  - libxml2
+  - libxmu6
+  - libxpm4
+  - libxrandr2
+  - libxrender1
+  - libxss1
+  - libxt6
+  - libxtst6
+  - libxxf86vm1
+  - zlib1g
+
+  # Not in the real Runtime, but needed for Intel gfx
+  - libgl1-mesa-dri
+  - libgl1-mesa-glx
+  - libtxc-dxtn-s2tc0
+
+# The real Runtime also has libstdc++6-4.6-pic but that seems likely
+# to be a mistake?
+add_packages:
+  - nvidia-cg-toolkit
+  - zenity
+
+  # TODO: These should be multiarch but they don't seem to be ready
+  - libappindicator1
+  - libindicator7
+  - libnm-glib4
+  - libnm-util2
+  - libtbb2
+  - libvpx1
+
+  # Not in the real Runtime, but steam-launcher dependencies
+  - curl
+  - python
+  - python-apt
+  - xterm
+  - xz-utils
+
+platform:
+  null: null
+
+sdk:
+  add_packages:
+    - build-essential
+    - clang-3.6
+    - cmake
+    - debhelper
+    - dpkg-dev
+    - fakeroot
+    - g++-4.8
+    - gcc-4.8
+    - gdb
+    - libstdc++6-4.6-pic
+    - lldb-3.6
+    - pkg-config
+    - steamrt-dev
+    - time
+    - ubuntu-minimal
+
+  # TODO: also
+  #  - lldb-3.4
+  #  - clang-3.4
+  # but despite what it says in the script, those don't actually seem to be
+  # co-installable?
+
+  post_script: |
+    # Workaround bug 714890 in 32-bit clang. Gcc 4.8 changed the include paths.
+    # http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=714890
+    #   /usr/include/c++/4.6/i686-linux-gnu/bits/c++config.h
+    #   /usr/include/i386-linux-gnu/c++/4.8/bits/c++config.h
+    if [ -d /usr/include/i386-linux-gnu/c++/4.8 ]; then
+        ln -s /usr/include/i386-linux-gnu/c++/4.8 /usr/include/c++/4.8/i686-linux-gnu
+    fi
+
+    # Setup compiler alternatives
+    update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.6 50
+    update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.6 50
+    update-alternatives --install /usr/bin/cpp cpp-bin /usr/bin/cpp-4.6 50
+
+    update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 100
+    update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 100
+    update-alternatives --install /usr/bin/cpp cpp-bin /usr/bin/cpp-4.8 100
+
+    #update-alternatives --install /usr/bin/gcc gcc /usr/bin/clang-3.4 50
+    #update-alternatives --install /usr/bin/g++ g++ /usr/bin/clang++-3.4 50
+
+    update-alternatives --install /usr/bin/gcc gcc /usr/bin/clang-3.6 50
+    update-alternatives --install /usr/bin/g++ g++ /usr/bin/clang++-3.6 50
+
+    # gcc-4.8 is the default
+    update-alternatives --set gcc /usr/bin/gcc-4.8
+    update-alternatives --set g++ /usr/bin/g++-4.8
+    update-alternatives --set cpp-bin /usr/bin/cpp-4.8
+...

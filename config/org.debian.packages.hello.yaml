@@ -1,0 +1,19 @@
+---
+id: org.debian.packages.hello
+branch: master
+runtime: net.debian.flatpak.Base.Platform
+runtime-version: stretch
+sdk: net.debian.flatpak.Base.Sdk
+command: hello
+writable-sdk: true
+modules:
+  - name: hello
+    x-flatdeb-apt-packages:
+      - hello
+    sources:
+      - type: file
+        path: deb-buildapi/configure
+        dest: '.'
+      - type: file
+        path: deb-buildapi/Makefile
+...

@@ -1,0 +1,11 @@
+---
+apt_components:
+  - main
+  - contrib
+debootstrap_script: 'stretch'
+can_merge_usr: true
+sources:
+  - apt_uri: 'http://deb.debian.org/debian'
+  - apt_uri: 'http://security.debian.org'
+    apt_suite: '*/updates'
+...

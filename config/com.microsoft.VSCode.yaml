@@ -1,0 +1,52 @@
+---
+id: com.microsoft.VSCode
+branch: 1.18.0
+runtime: com.microsoft.VSCodeRuntime.Platform
+sdk: com.microsoft.VSCodeRuntime.Sdk
+runtime-version: testing
+command: code
+tags: proprietary
+modules:
+  - name: vscode
+    x-flatdeb-apt-packages:
+      - gvfs
+      - xdg-utils
+    sources:
+      - type: file
+        path: deb-buildapi/configure
+        dest: '.'
+      - type: file
+        path: deb-buildapi/Makefile
+
+  - name: binary
+    build-options:
+      no-debuginfo: true
+      strip: false
+    sources:
+      - type: file
+        url: http://pools.corp.deepin.com/ppa/universe/pool/non-free/v/visual-studio-code/visual-studio-code_1.18.0-1_amd64.deb
+        sha256: 4d9ff1d4a26bb32fc1e28dbdedbce582c7e82e48a4db93a642967811c87f11aa
+      - type: file
+        path: deb-buildapi/configure
+        dest: '.'
+      - type: file
+        path: deb-buildapi/Makefile
+
+finish-args:
+  - --device=all
+  - --filesystem=~/.config/Code:create
+  - --share=ipc
+  - --share=network
+  - --socket=pulseaudio
+  - --socket=system-bus
+  - --socket=x11
+  - --talk-name=org.freedesktop.NetworkManager
+  - --env=LD_LIBRARY_PATH=/app/lib:/app/lib/x86_64-linux-gnu
+
+cleanup-commands:
+  - mv /app/opt/visual-studio-code /app
+  - rm -rf /app/opt 
+  - ln -sf /app/visual-studio-code/bin/code /app/bin/code
+  - sed -i -e 's,/usr/bin/code,/app/bin/code,g' /app/share/applications/*.desktop
+rename-desktop-file: visual-studio-code.desktop
+...
