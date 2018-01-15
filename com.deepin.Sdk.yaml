@@ -74,7 +74,6 @@ modules:
   - name: libx264
     sources:
       - type: git
-        branch: stable
         commit: aaa9aa83a111ed6f1db253d5afa91c5fc844583f
         url: 'https://git.videolan.org/git/x264.git'
     cleanup:
@@ -643,7 +642,7 @@ modules:
         url: 'https://github.com/linuxdeepin/dtkwidget.git'
       - type: script
         commands:
-          - qmake DEFINES+=DTK_DBUS_SINGLEINSTANCE DEFINES+=DTK_DMAN_PORTAL
+          - qmake DEFINES+=DTK_DBUS_SINGLEINSTANCE
         dest-filename: configure
     cleanup-platform:
       - /bin
