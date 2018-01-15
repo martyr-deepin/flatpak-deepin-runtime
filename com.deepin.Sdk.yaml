@@ -642,7 +642,7 @@ modules:
         url: 'https://github.com/linuxdeepin/dtkwidget.git'
       - type: script
         commands:
-          - qmake DEFINES+=DTK_DBUS_SINGLEINSTANCE
+          - qmake DEFINES+=DTK_DBUS_SINGLEINSTANCE DBUS_VERSION_0_4_2=YES
         dest-filename: configure
     cleanup-platform:
       - /bin
@@ -678,8 +678,6 @@ modules:
       - type: git
         branch: BUILDVERQT5DXCB
         url: 'https://cr.deepin.io/qt5dxcb-plugin'
-      - type: patch
-        path: patch/qt5integration/0001-use-system-qt5-headers.patch
       - type: script
         commands:
           - qmake
